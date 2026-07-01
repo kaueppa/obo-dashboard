@@ -1,0 +1,7 @@
+{
+  "name": "obo-dashboard",
+  "version": "1.0.0",
+  "description": "Obo Studio Dashboard — backend serverless para Trello, ClickUp, Conta Azul e Banco Inter",
+  "engines": { "node": ">=18" },
+  "private": true
+}
