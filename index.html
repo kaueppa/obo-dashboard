@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obo Studio — Dashboard</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:#F2F3F5;display:flex;height:100vh;overflow:hidden;font-size:13px;color:#111}
+.sidebar{width:188px;background:#FFD600;display:flex;flex-direction:column;flex-shrink:0;padding:18px 0 12px;overflow-y:auto}
+.sidebar-logo{padding:0 16px 20px;display:flex;flex-direction:column;gap:3px}
+.logo-mark{width:38px;height:38px;background:#111;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.logo-text{color:#FFD600;font-weight:900;font-size:12px;letter-spacing:-.5px}
+.logo-sub{font-size:10px;font-weight:700;color:rgba(0,0,0,.45);text-transform:lowercase;letter-spacing:1.5px;margin-top:2px}
+.nav-label{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:rgba(0,0,0,.38);padding:8px 16px 4px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 16px;cursor:pointer;font-size:12px;font-weight:500;color:rgba(0,0,0,.72);text-decoration:none;transition:background .12s}
+.nav-item:hover{background:rgba(0,0,0,.07);color:#000}
+.nav-item.active{background:rgba(0,0,0,.11);font-weight:700;color:#000}
+.nav-icon{width:14px;height:14px;opacity:.65;flex-shrink:0}
+.nav-badge{margin-left:auto;background:#111;color:#FFD600;font-size:9px;font-weight:800;padding:2px 5px;border-radius:10px}
+.sidebar-footer{margin-top:auto;padding:10px 14px 0;border-top:1px solid rgba(0,0,0,.12);display:flex;align-items:center;gap:8px}
+.u-avatar{width:28px;height:28px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;color:#FFD600;font-size:10px;font-weight:800;flex-shrink:0}
+.u-name{font-size:11px;font-weight:700;color:#111}
+.u-role{font-size:9px;color:rgba(0,0,0,.45)}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.topbar{background:#fff;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #EAEAEA;flex-shrink:0}
+.topbar h1{font-size:18px;font-weight:800;color:#111}
+.topbar p{font-size:11px;color:#999;margin-top:1px}
+.tb-right{display:flex;align-items:center;gap:10px}
+.search{background:#F4F5F7;border:none;border-radius:8px;padding:7px 12px;font-size:11px;color:#888;width:195px;outline:none}
+.notif-wrap{position:relative}
+.notif-btn{background:none;border:none;cursor:pointer;padding:4px;display:flex}
+.notif-dot{position:absolute;top:0;right:0;width:16px;height:16px;border-radius:50%;background:#FF4444;color:#fff;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.date-chip{background:#F4F5F7;border-radius:6px;padding:5px 10px;font-size:11px;color:#666;font-weight:500;white-space:nowrap}
+.scroll{flex:1;overflow-y:auto;padding:16px 18px}
+.layout{display:flex;gap:16px}
+.col-main{flex:1;display:flex;flex-direction:column;gap:14px;min-width:0}
+.col-right{width:252px;flex-shrink:0;display:flex;flex-direction:column;gap:14px}
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.kpi{background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.kpi-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.kpi-label{font-size:10px;color:#888;font-weight:500;margin-bottom:4px}
+.kpi-val{font-size:15px;font-weight:800;color:#111;line-height:1.15}
+.kpi-val sub{font-size:10px;font-weight:500;color:#AAA;vertical-align:baseline}
+.kpi-delta{display:flex;align-items:center;gap:3px;font-size:10px;font-weight:600;margin-top:3px}
+.kpi-delta.up{color:#22C55E}.kpi-delta.dn{color:#EF4444}.kpi-delta.nu{color:#F59E0B}
+.kpi-spark{height:28px;margin-top:8px}
+.kpi-spark svg{width:100%;height:100%;overflow:visible}
+.section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.section-title{font-size:13px;font-weight:700;color:#111}
+.alerts{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.alert{background:#fff;border-radius:10px;padding:11px 13px;box-shadow:0 1px 3px rgba(0,0,0,.06);border-left:3px solid}
+.alert.red{border-color:#EF4444}.alert.orange{border-color:#F97316}.alert.amber{border-color:#F59E0B}.alert.blue{border-color:#3B82F6}
+.al-num{font-size:20px;font-weight:900}
+.alert.red .al-num{color:#EF4444}.alert.orange .al-num{color:#F97316}.alert.amber .al-num{color:#F59E0B}.alert.blue .al-num{color:#3B82F6}
+.al-name{font-size:11.5px;font-weight:700;color:#111;margin-top:1px}
+.al-desc{font-size:10px;color:#999;margin-top:2px}
+.al-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+.atag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px}
+.atag.red{background:#FEE2E2;color:#991B1B}.atag.orange{background:#FFEDD5;color:#9A3412}.atag.blue{background:#DBEAFE;color:#1E40AF}.atag.gray{background:#F3F4F6;color:#374151}
+.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kb-col{background:#F7F8FA;border-radius:10px;padding:10px}
+.kb-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.kb-title{font-size:11px;font-weight:700}
+.kb-badge{font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px}
+.kb-badge.y{background:#FEF9C3;color:#854D0E}.kb-badge.b{background:#DBEAFE;color:#1E40AF}.kb-badge.r{background:#FEE2E2;color:#991B1B}.kb-badge.g{background:#DCFCE7;color:#166534}
+.kb-card{background:#fff;border-radius:8px;padding:8px 9px;margin-bottom:6px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.kb-card-ttl{font-size:11px;font-weight:600;color:#111;line-height:1.3}
+.kb-card-sub{font-size:10px;color:#888;margin-top:2px}
+.kb-tag{font-size:9px;font-weight:700;padding:2px 5px;border-radius:4px;display:inline-block;margin-top:4px}
+.kb-tag.at{background:#FEE2E2;color:#991B1B}.kb-tag.ag{background:#FEF9C3;color:#854D0E}.kb-tag.pe{background:#FFEDD5;color:#9A3412}.kb-tag.ok{background:#DCFCE7;color:#166534}
+.tbl-wrap{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+.tbl-top{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 8px}
+.tbl-title{font-size:13px;font-weight:700}
+.tbl-link{font-size:11px;color:#AAA;cursor:pointer;text-decoration:none}
+table{width:100%;border-collapse:collapse}
+thead th{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#AAA;padding:6px 14px;text-align:left;border-bottom:1px solid #F0F0F0}
+tbody td{padding:8px 14px;border-bottom:1px solid #F7F7F7;font-size:11.5px;vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+.cl-name{display:flex;align-items:center;gap:7px}
+.cl-dot{width:22px;height:22px;border-radius:50%;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.hs-wrap{display:flex;align-items:center;gap:6px}
+.hs-num{font-weight:700;min-width:22px}
+.hs-bar{width:46px;height:4px;background:#EEE;border-radius:2px;overflow:hidden}
+.hs-fill{height:100%;border-radius:2px}
+.sbadge{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:12px}
+.sbadge.ex{background:#DCFCE7;color:#166534}.sbadge.bom{background:#DBEAFE;color:#1E40AF}.sbadge.at{background:#FEF9C3;color:#854D0E}.sbadge.ri{background:#FEE2E2;color:#991B1B}
+.panel{background:#fff;border-radius:12px;padding:13px 14px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.panel-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.panel-title{font-size:12px;font-weight:700;color:#111}
+.panel-link{font-size:10px;color:#BBB;cursor:pointer;text-decoration:none}
+.fin-row{display:flex;align-items:center;justify-content:space-between;padding:4px 0}
+.fin-left{display:flex;align-items:center;gap:6px}
+.fin-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.fin-lbl{font-size:11px;color:#555}
+.fin-val{font-size:12px;font-weight:700}
+.fin-extra{display:flex;align-items:center;gap:10px;margin-top:10px}
+.margin-ring{width:54px;height:54px;border-radius:50%;border:4px solid #FFD600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.margin-pct{font-size:12px;font-weight:900;color:#111}
+.margin-info{font-size:10px;color:#666;line-height:1.5}
+.meta-block{margin-bottom:8px}
+.meta-top{display:flex;justify-content:space-between;margin-bottom:3px}
+.meta-name{font-size:11px;color:#555}
+.meta-pct{font-size:10px;color:#999}
+.meta-track{height:5px;background:#EBEBEB;border-radius:3px;overflow:hidden}
+.meta-fill{height:100%;border-radius:3px}
+.meta-target{font-size:9px;color:#CCC;text-align:right;margin-top:2px}
+.insight{display:flex;gap:7px;padding:5px 0;border-bottom:1px solid #F5F5F5}
+.insight:last-child{border-bottom:none}
+.ins-icon{width:16px;height:16px;border-radius:4px;font-size:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.ins-text{font-size:10.5px;color:#555;line-height:1.45}
+.ps-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.ps-num{font-size:16px;font-weight:800;color:#111}
+.ps-lbl{font-size:9px;color:#888}
+.ps-delta{font-size:9px;font-weight:600}
+.ps-delta.up{color:#22C55E}.ps-delta.dn{color:#EF4444}
+.cap-bar{height:7px;background:#EEE;border-radius:4px;overflow:hidden;margin:6px 0 3px}
+.cap-fill{height:100%;background:#FFD600;border-radius:4px}
+.cap-labels{display:flex;justify-content:space-between}
+.cap-labels span{font-size:9px;color:#999}
+/* ── VIEWS ── */
+.view{display:none}
+.view.active{display:block}
+/* ── COMERCIAL ── */
+.crm-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.crm-kpi{background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.crm-kpi-label{font-size:10px;color:#888;font-weight:500;margin-bottom:4px}
+.crm-kpi-val{font-size:22px;font-weight:900;color:#111;line-height:1.1}
+.crm-kpi-sub{font-size:10px;color:#999;margin-top:3px}
+.crm-meta-wrap{background:#fff;border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:14px}
+.crm-meta-title{font-size:13px;font-weight:700;margin-bottom:12px}
+.crm-meta-main{display:flex;align-items:center;gap:20px;margin-bottom:12px}
+.crm-ring{width:80px;height:80px;flex-shrink:0}
+.crm-ring svg{width:80px;height:80px}
+.crm-meta-info{flex:1}
+.crm-meta-val{font-size:28px;font-weight:900;color:#111}
+.crm-meta-desc{font-size:11px;color:#888;margin-top:2px}
+.crm-comissao{background:#F7F8FA;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:11px;color:#555}
+.crm-comissao strong{color:#111}
+.pipeline-wrap{background:#fff;border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:14px}
+.pipeline-title{font-size:13px;font-weight:700;margin-bottom:12px}
+.pipeline-cols{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.pipe-col{background:#F7F8FA;border-radius:10px;padding:10px}
+.pipe-col-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.pipe-col-title{font-size:10px;font-weight:700;color:#555}
+.pipe-count{font-size:10px;font-weight:800;padding:1px 7px;border-radius:10px}
+.pipe-count.prospects{background:#EDE9FE;color:#5B21B6}
+.pipe-count.contato{background:#DBEAFE;color:#1E40AF}
+.pipe-count.proposta{background:#FEF9C3;color:#854D0E}
+.pipe-count.bolo{background:#FFEDD5;color:#9A3412}
+.pipe-count.perdidas{background:#FEE2E2;color:#991B1B}
+.pipe-card{background:#fff;border-radius:7px;padding:7px 9px;margin-bottom:5px;box-shadow:0 1px 2px rgba(0,0,0,.05);font-size:10.5px;font-weight:600;color:#111;line-height:1.3}
+.pipe-more{font-size:9px;color:#BBB;text-align:center;padding-top:4px;border-top:1px dashed #EEE;margin-top:4px}
+.crm-table-wrap{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark"><span class="logo-text">obo</span></div>
+    <span class="logo-sub">studio</span>
+  </div>
+  <div class="nav-label">Principal</div>
+  <a class="nav-item active" href="#" data-view="dashboard">
+    <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor"/><rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor"/><rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor"/><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor"/></svg>
+    Dashboard
+  </a>
+  <a class="nav-item" href="#" data-view="clientes">
+    <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M1 13c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 6l2 2-2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Clientes
+  </a>
+  <a class="nav-item" href="#" data-view="projetos">
+    <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 3V2M11 3V2M2 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Projetos
+  </a>
+  <a class="nav-item" href="#" data-view="projetos">
+    <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Tarefas
+  </a>
+  <a class="nav-item" href="#" data-view="comercial">
+    <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Comercial
+  </a>
+  <a class="nav-item" href="#" data-view="financeiro">
+    <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M4 6l4-4 4 4M4 10l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Financeiro
+  </a>
+  <div class="nav-label">Gestão</div>
+  <a class="nav-item" href="#" data-view="dashboard">
+    <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="3" width="4" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="6.5" y="6" width="4" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="11.5" y="1" width="3" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+    Relatórios
+  </a>
+  <a class="nav-item" href="#" data-view="dashboard">
+    <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M8 1v4M8 11v4M1 8h4M11 8h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Aprovações
+    <span class="nav-badge" id="nav-badge-aprovacoes">4</span>
+  </a>
+  <a class="nav-item" href="#" data-view="dashboard">
+    <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 3V2M11 3V2M2 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Calendário
+  </a>
+  <a class="nav-item" href="#" data-view="dashboard">
+    <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M6 7.5C6 6.67 6.67 6 7.5 6h1C9.33 6 10 6.67 10 7.5c0 .83-.67 1.5-1.5 1.5H8v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="12" r=".75" fill="currentColor"/></svg>
+    Reuniões
+  </a>
+  <div class="nav-label">Pessoas</div>
+  <a class="nav-item" href="#" data-view="dashboard">
+    <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="5" cy="5" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="11" cy="5" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M1 13c0-2.21 1.79-4 4-4s4 1.79 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11 9c1.1 0 2 .44 2.69 1.14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Time
+  </a>
+  <a class="nav-item" href="#" data-view="dashboard">Feedbacks</a>
+  <a class="nav-item" href="#" data-view="dashboard">PDIs</a>
+  <div class="nav-label">Biblioteca</div>
+  <a class="nav-item" href="#" data-view="dashboard">Templates</a>
+  <a class="nav-item" href="#" data-view="dashboard">Arquivos</a>
+  <a class="nav-item" href="#" data-view="dashboard">Cases</a>
+  <div class="sidebar-footer">
+    <div class="u-avatar">KA</div>
+    <div>
+      <div class="u-name">Kauê M.</div>
+      <div class="u-role">CEO</div>
+    </div>
+  </div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1 id="topbar-title">Bom dia, Kauê. 👋</h1>
+      <p id="topbar-sub">Quinta-feira, 18 de junho de 2026 · extrato Conta Azul IP até 16/06 · Inter até 15/06</p>
+    </div>
+    <div class="tb-right">
+      <input class="search" placeholder="Buscar clientes, projetos, tarefas…" />
+      <div class="notif-wrap">
+        <button class="notif-btn">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2a6 6 0 00-6 6v3l-1.5 2.5h15L16 11V8a6 6 0 00-6-6zM8 17a2 2 0 004 0H8z" stroke="#555" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <span class="notif-dot">4</span>
+      </div>
+      <div class="date-chip">Segunda-feira, 9 de junho</div>
+      <div class="u-avatar" style="width:30px;height:30px;font-size:11px">KA</div>
+    </div>
+  </header>
+
+  <div class="scroll">
+
+    <!-- ══════════════════════════════════
+         VIEW: DASHBOARD (principal)
+    ══════════════════════════════════ -->
+    <div class="view active" id="view-dashboard">
+      <div class="layout">
+        <div class="col-main">
+          <div class="kpi-row">
+            <div class="kpi">
+              <div class="kpi-icon" style="background:#FEF9C3"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#854D0E" stroke-width="1.5"/><path d="M10 6v8M7.5 8.5C7.5 7.67 8.17 7 9 7h2a1.5 1.5 0 010 3H9a1.5 1.5 0 000 3h2a1.5 1.5 0 000-3" stroke="#854D0E" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div class="kpi-label">Receita do mês (competência)</div>
+              <div class="kpi-val">R$ 52.015<sub>,29</sub></div>
+              <div class="kpi-delta up">↑ 2,4% vs mai · jun ainda em andamento</div>
+              <div class="kpi-spark"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#EAB308" stop-opacity=".3"/><stop offset="100%" stop-color="#EAB308" stop-opacity="0"/></linearGradient></defs><path d="M0,23 L25,12 L50,5 L75,0 L100,5" fill="none" stroke="#EAB308" stroke-width="1.5"/><path d="M0,23 L25,12 L50,5 L75,0 L100,5 L100,30 L0,30 Z" fill="url(#g1)"/></svg></div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-icon" style="background:#EDE9FE"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M3 17l4-8 4 4 3-5 3 3" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="kpi-label">A receber em Jun</div>
+              <div class="kpi-val">R$ 49.521<sub>,22</sub></div>
+              <div class="kpi-delta nu">R$6.705,93 recebido · R$42.815,29 a vencer</div>
+              <div class="kpi-spark"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7C3AED" stop-opacity=".2"/><stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/></linearGradient></defs><path d="M0,27 L25,18 L50,10 L75,5 L100,8" fill="none" stroke="#7C3AED" stroke-width="1.5"/><path d="M0,27 L25,18 L50,10 L75,5 L100,8 L100,30 L0,30 Z" fill="url(#g2)"/></svg></div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-icon" style="background:#FEF9C3"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M2 6h16v10a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM2 6l2-3h12l2 3" stroke="#92400E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 10v4M8 12h4" stroke="#92400E" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div class="kpi-label">Saldo Banco Inter PJ</div>
+              <div class="kpi-val" id="kpi-inter-saldo" style="color:#F59E0B">R$ 143<sub>,32</sub></div>
+              <div class="kpi-delta nu">↑ saiu do negativo em 15/06 · saldo ainda crítico</div>
+              <div class="kpi-spark"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E" stop-opacity=".25"/><stop offset="100%" stop-color="#22C55E" stop-opacity="0"/></linearGradient></defs><path d="M0,30 L20,28 L40,12 L60,3 L80,3 L100,0" fill="none" stroke="#22C55E" stroke-width="1.5"/><path d="M0,30 L20,28 L40,12 L60,3 L80,3 L100,0 L100,30 L0,30 Z" fill="url(#g3)"/></svg></div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-icon" style="background:#DBEAFE"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="7" cy="6" r="3" stroke="#1E40AF" stroke-width="1.5"/><path d="M2 16c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="#1E40AF" stroke-width="1.5" stroke-linecap="round"/><path d="M15 8v6M12 11h6" stroke="#1E40AF" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div class="kpi-label">Clientes ativos</div>
+              <div class="kpi-val">16</div>
+              <div class="kpi-delta nu">+4 novos no pipeline · Eady encerra 22/6</div>
+              <div class="kpi-spark"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><defs><linearGradient id="g4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3B82F6" stop-opacity=".2"/><stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/></linearGradient></defs><path d="M0,22 L25,18 L50,14 L75,8 L100,5" fill="none" stroke="#3B82F6" stroke-width="1.5"/><path d="M0,22 L25,18 L50,14 L75,8 L100,5 L100,30 L0,30 Z" fill="url(#g4)"/></svg></div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-icon" style="background:#FFE4E6"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 3l1.8 3.6L16 7.5l-3 2.92.7 4.12L10 12.6l-3.7 1.94.7-4.12L4 7.5l4.2-.9L10 3z" stroke="#9F1239" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+              <div class="kpi-label">Saúde operacional</div>
+              <div class="kpi-val">78%</div>
+              <div class="kpi-delta dn">↓ 11 tasks em atraso (Trello)</div>
+              <div class="kpi-spark"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><defs><linearGradient id="g5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#EF4444" stop-opacity=".2"/><stop offset="100%" stop-color="#EF4444" stop-opacity="0"/></linearGradient></defs><path d="M0,5 L25,8 L50,12 L75,18 L100,22" fill="none" stroke="#EF4444" stroke-width="1.5"/><path d="M0,5 L25,8 L50,12 L75,18 L100,22 L100,30 L0,30 Z" fill="url(#g5)"/></svg></div>
+            </div>
+          </div>
+          <!-- ATENÇÃO -->
+          <div>
+            <div class="section-hd"><span class="section-title">O que precisa da sua atenção</span></div>
+            <div class="alerts">
+              <div class="alert amber"><div class="al-num" style="font-size:14px">143,32</div><div class="al-name">saldo Inter crítico</div><div class="al-desc">Saiu do negativo em 15/06 · margem quase zero</div><div class="al-tags"><span class="atag orange">ATENÇÃO</span></div></div>
+              <div class="alert red"><div class="al-num">2</div><div class="al-name">clientes em risco</div><div class="al-desc">Sem entrega há +15 dias</div><div class="al-tags"><span class="atag red">SEVEN</span><span class="atag red">EXPEDITO</span></div></div>
+              <div class="alert orange"><div class="al-num" id="alert-aprovacao-num">4</div><div class="al-name">aprovações travadas</div><div class="al-desc">Aguardando cliente há +5 dias</div><div class="al-tags"><span class="atag orange">SEVEN</span><span class="atag orange">EADY</span><span class="atag orange">EXPEDITO</span></div></div>
+              <div class="alert amber"><div class="al-num" id="alert-atraso-num">11</div><div class="al-name">tarefas em atraso</div><div class="al-desc">Prazo ultrapassado no Trello (Pauta+Obo)</div><div class="al-tags"><span class="atag gray">BRDOCS</span><span class="atag gray">OBO</span><span class="atag gray">ABC</span><span class="atag gray">+8</span></div></div>
+              <div class="alert blue"><div class="al-num" style="font-size:14px">10.000</div><div class="al-name">antecipação vencida</div><div class="al-desc">Lucros Kaué venc. 07/06, em aberto</div><div class="al-tags"><span class="atag blue">Financeiro</span></div></div>
+            </div>
+          </div>
+          <!-- KANBAN -->
+          <div>
+            <div class="section-hd"><span class="section-title">Operação do dia</span></div>
+            <div class="kanban">
+              <div class="kb-col"><div class="kb-hd"><span class="kb-title">Hoje</span><span class="kb-badge y">5</span></div><div class="kb-card"><div class="kb-card-ttl">BEM COMUM — Relatório do Mês</div><div class="kb-card-sub">Cliente: Bem Comum</div></div><div class="kb-card"><div class="kb-card-ttl">FABSOL — Destaques Insta</div><div class="kb-card-sub">Cliente: Fabsol</div></div><div class="kb-card"><div class="kb-card-ttl">FABSOL — Cronograma BJun</div><div class="kb-card-sub">Cliente: Fabsol</div></div><div class="kb-card"><div class="kb-card-ttl">S VISTORIAS n Semana 8-14/6</div><div class="kb-card-sub">Cliente: S Vistorias</div></div><div class="kb-card"><div class="kb-card-ttl">S VISTORIAS — Plano de Mídias</div><div class="kb-card-sub">Cliente: S Vistorias</div></div></div>
+              <div class="kb-col"><div class="kb-hd"><span class="kb-title">Em andamento</span><span class="kb-badge b" id="kb-badge-andamento">14</span></div><div class="kb-card"><div class="kb-card-ttl">EXPEDITO — Padrões PPT</div><div class="kb-card-sub">Cliente: Expedito</div><span class="kb-tag ag">Aguardando</span></div><div class="kb-card"><div class="kb-card-ttl">SEVEN — Peças KV</div><div class="kb-card-sub">Cliente: Seven</div><span class="kb-tag ag">Aguardando</span></div><div class="kb-card"><div class="kb-card-ttl">EADY — Crono 1¸ Quinz. Jun</div><div class="kb-card-sub">Cliente: Eady</div><span class="kb-tag ag">Aguardando</span></div><div class="kb-card"><div class="kb-card-ttl">LP SEVEN — Briefing</div><div class="kb-card-sub">Cliente: Seven</div></div><div class="kb-card"><div class="kb-card-ttl">ALPLAST — Esqueleto Jun</div><div class="kb-card-sub">Cliente: Alplast</div></div><div class="kb-more">+ 9 mais</div></div>
+              <div class="kb-col"><div class="kb-hd"><span class="kb-title">Travadas</span><span class="kb-badge r" id="kb-badge-travadas">8</span></div><div class="kb-card"><div class="kb-card-ttl">EXPEDITO — Site</div><div class="kb-card-sub">Cliente: Expedito</div><span class="kb-tag at">Em atraso</span></div><div class="kb-card"><div class="kb-card-ttl">ÊNIO — Tela Edusummit</div><div class="kb-card-sub">Cliente: Ênio</div><span class="kb-tag at">Em atraso</span></div><div class="kb-card"><div class="kb-card-ttl">FABSOL — Catálogo</div><div class="kb-card-sub">Cliente: Fabsol</div><span class="kb-tag pe">Stand-by</span></div><div class="kb-more">+ 5 mais</div></div>
+              <div class="kb-col"><div class="kb-hd"><span class="kb-title">Concluídas</span><span class="kb-badge g">27</span></div><div class="kb-card"><div class="kb-card-ttl">ANTARES — Esquel. Junho</div><div class="kb-card-sub">Cliente: Antares</div><span class="kb-tag ok">Aprovado</span></div><div class="kb-card"><div class="kb-card-ttl">ANTARES — Edição Vídeo Dia Mães</div><div class="kb-card-sub">Cliente: Antares</div><span class="kb-tag ok">Aprovado</span></div><div class="kb-card"><div class="kb-card-ttl">XPTO — Esquel. Mensal</div><div class="kb-card-sub">Cliente: Xpto</div><span class="kb-tag ok">Finalizado</span></div><div class="kb-card"><div class="kb-card-ttl">S VISTORIAS — Aviso Feriado</div><div class="kb-card-sub">Cliente: S Vistorias</div><span class="kb-tag ok">Finalizado</span></div><div class="kb-more">+ 23 mais</div></div>
+            </div>
+          </div>
+          <!-- CLIENTES TABLE -->
+          <div class="tbl-wrap">
+            <div class="tbl-top"><span class="tbl-title">Clientes ativos</span><a class="tbl-link" href="#">Ver todos →</a></div>
+            <table>
+              <thead><tr><th>Cliente</th><th>Ticket</th><th>Health Score</th><th>Status Op.</th><th>Status Mkt</th></tr></thead>
+              <tbody>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#E11D48">BC</div>Bem Comum</div></td><td>R$ 14.578</td><td><div class="hs-wrap"><span class="hs-num">92</span><div class="hs-bar"><div class="hs-fill" style="width:92%;background:#22C55E"></div></div></div></td><td><span class="sbadge ex">Excelente</span></td><td><span class="sbadge ex">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#6B7280">XP</div>XPTO</div></td><td>R$ 4.500</td><td><div class="hs-wrap"><span class="hs-num">74</span><div class="hs-bar"><div class="hs-fill" style="width:74%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#7C3AED">SE</div>Seven Motors</div></td><td>R$ 3.722</td><td><div class="hs-wrap"><span class="hs-num">58</span><div class="hs-bar"><div class="hs-fill" style="width:58%;background:#F59E0B"></div></div></div></td><td><span class="sbadge ri">Risco</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#0F766E">AN</div>Antares</div></td><td>R$ 3.690</td><td><div class="hs-wrap"><span class="hs-num">80</span><div class="hs-bar"><div class="hs-fill" style="width:80%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge ex">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#0891B2">BA</div>Bruno Ary</div></td><td>R$ 3.998</td><td><div class="hs-wrap"><span class="hs-num">76</span><div class="hs-bar"><div class="hs-fill" style="width:76%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#059669">EN</div>Ênio</div></td><td>R$ 3.498</td><td><div class="hs-wrap"><span class="hs-num">72</span><div class="hs-bar"><div class="hs-fill" style="width:72%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#A16207">BR</div>BR Docs</div></td><td>R$ 2.939</td><td><div class="hs-wrap"><span class="hs-num">74</span><div class="hs-bar"><div class="hs-fill" style="width:74%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#166534">FA</div>Fabsol</div></td><td>R$ 2.000</td><td><div class="hs-wrap"><span class="hs-num">82</span><div class="hs-bar"><div class="hs-fill" style="width:82%;background:#3B82F6"></div></div></div></td><td><span class="sbadge ex">Excelente</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#D97706">SV</div>S Vistorias</div></td><td>R$ 2.998</td><td><div class="hs-wrap"><span class="hs-num">71</span><div class="hs-bar"><div class="hs-fill" style="width:71%;background:#3B82F6"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#BE185D">EA</div>Eady</div></td><td>R$ 2.498</td><td><div class="hs-wrap"><span class="hs-num">62</span><div class="hs-bar"><div class="hs-fill" style="width:62%;background:#F59E0B"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge at">Atenção</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#2563EB">AL</div>Alplast</div></td><td>R$ 2.800</td><td><div class="hs-wrap"><span class="hs-num">70</span><div class="hs-bar"><div class="hs-fill" style="width:70%;background:#3B82F6"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- COL RIGHT -->
+        <div class="col-right">
+          <div class="panel">
+            <div class="panel-hd"><span class="panel-title">Financeiro</span><a class="panel-link" href="#" data-view="financeiro">Ver tudo →</a></div>
+            <div class="fin-row"><div class="fin-left"><div class="fin-dot" style="background:#22C55E"></div><span class="fin-lbl">Entradas (mês corrente)</span></div><span id="fin-sidebar-entradas" class="fin-val" style="color:#22C55E">R$ 52.015</span></div>
+            <div class="fin-row"><div class="fin-left"><div class="fin-dot" style="background:#EF4444"></div><span class="fin-lbl">Saídas (mês corrente)</span></div><span id="fin-sidebar-saidas" class="fin-val" style="color:#EF4444">R$ 48.178</span></div>
+            <div class="fin-row" style="border-top:1px solid #F0F0F0;margin-top:4px;padding-top:8px"><div class="fin-left"><div class="fin-dot" style="background:#22C55E"></div><span class="fin-lbl" style="font-weight:700">Resultado</span></div><span id="fin-sidebar-resultado" class="fin-val" style="color:#22C55E">+R$ 3.837</span></div>
+            <div class="fin-extra"><div class="margin-ring" style="border-color:#EF4444"><span class="margin-pct" style="color:#EF4444;font-size:10px">-13,6k</span></div><div class="margin-info"><strong style="font-size:11px;color:#111">Abr/26 — pior mês</strong><br>Receitas R$43.233 · Despesas R$56.842<br>Resultado <span style="color:#EF4444">-R$13.609</span><br><span style="color:#22C55E;font-size:9px">Mai (+R$3.508) e Jun (+R$3.837) recuperaram</span></div></div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd"><span class="panel-title">Metas financeiras</span></div>
+            <div class="meta-block"><div class="meta-top"><span class="meta-name">Receita mensal</span><span class="meta-pct">83%</span></div><div class="meta-track"><div class="meta-fill" style="width:83%;background:#22C55E"></div></div><div class="meta-target">Meta: R$ 65.000 · R$ 54.417</div></div>
+            <div class="meta-block"><div class="meta-top"><span class="meta-name">Resultado líquido</span><span class="meta-pct">47%</span></div><div class="meta-track"><div class="meta-fill" style="width:47%;background:#F59E0B"></div></div><div class="meta-target">Meta: R$ 6.500 · Melhor: R$ 3.073 (abr)</div></div>
+            <div class="meta-block"><div class="meta-top"><span class="meta-name">Clientes ativos</span><span class="meta-pct">85%</span></div><div class="meta-track"><div class="meta-fill" style="width:85%;background:#3B82F6"></div></div><div class="meta-target">Meta: 20 clientes · Atual: 17</div></div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd"><span class="panel-title">Insights da semana</span></div>
+            <div class="insight"><div class="ins-icon" style="background:#FEF9C3">⚠️</div><span class="ins-text">Banco Inter PJ voltou ao positivo em 15/06 (saldo R$143,32 após Pix de R$3.500 da Obo Studio), mas margem é crítica. Conta Azul IP separada tem R$16.678,24.</span></div>
+            <div class="insight"><div class="ins-icon" style="background:#FEE2E2">🔁</div><span class="ins-text">A conta caiu no cheque especial quase todo mês em 2026, pagando juros/IOF — custo financeiro recorrente evitável.</span></div>
+            <div class="insight"><div class="ins-icon" style="background:#FEF9C3">💸</div><span class="ins-text">Antecipação de lucros do Kauê (R$10.000) está vencida desde 07/06 e ainda em aberto no Conta Azul.</span></div>
+            <div class="insight"><div class="ins-icon" style="background:#DBEAFE">📊</div><span class="ins-text">Jun/26 já soma R$52.015 em receita (competência) e resultado parcial de +R$3.837 — recuperação após abril negativo.</span></div>
+            <div class="insight"><div class="ins-icon" style="background:#FEE2E2">⚠️</div><span class="ins-text">EXPEDITO sem entrega há +15 dias e com site em atraso — risco de churn.</span></div>
+            <div class="insight"><div class="ins-icon" style="background:#DCFCE7">⭐</div><span class="ins-text">ASSOCIACAO BEM COMUM segue como maior cliente recorrente (~R$14,6k/mês) — forte concentração de receita.</span></div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd"><span class="panel-title">Pessoas &amp; Cultura</span></div>
+            <div class="ps-grid">
+              <div class="ps-stat"><div class="ps-num">11</div><div class="ps-lbl">Colaboradores ativos</div><div class="ps-delta up">+1 vs mai</div></div>
+              <div class="ps-stat"><div class="ps-num">R$24,5k</div><div class="ps-lbl">Folha de pagamento (jun)</div><div class="ps-delta nu">12 pessoas pagas</div></div>
+              <div class="ps-stat"><div class="ps-num" id="ps-atraso-num">11</div><div class="ps-lbl">Tasks em atraso</div><div class="ps-delta dn">Trello: Pauta + Obo Studio</div></div>
+              <div class="ps-stat"><div class="ps-num">27</div><div class="ps-lbl">Finalizadas no mês</div><div class="ps-delta up">+8 vs mai</div></div>
+            </div>
+            <div style="font-size:10px;color:#999;margin-bottom:4px">Capacidade operacional</div>
+            <div class="cap-bar"><div class="cap-fill" style="width:78%"></div></div>
+            <div class="cap-labels"><span>78% utilizado</span><span>Ideal: até 85%</span></div>
+            <div style="margin-top:10px;font-size:10px;color:#999;margin-bottom:6px">Time ativo em jun/26</div>
+            <div style="display:flex;gap:4px;flex-wrap:wrap">
+              <div style="width:22px;height:22px;border-radius:50%;background:#7C3AED;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Sarah">SA</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#059669;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Carol">CA</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#DC2626;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Rodrigo">RO</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#2563EB;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Lucas">LC</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#0891B2;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Gabi">GA</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#D97706;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Everson">EV</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#9333EA;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Jessyca">JE</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#BE185D;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Tabatha">TA</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#0F766E;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Cecilia">CE</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#A16207;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Ana Luísa">AL</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#6B7280;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Juliana">JU</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════
+         VIEW: COMERCIAL
+    ══════════════════════════════════ -->
+    <div class="view" id="view-comercial">
+      <!-- KPIs Comercial -->
+      <div class="crm-kpi-row">
+        <div class="crm-kpi">
+          <div class="crm-kpi-label">Total no pipeline</div>
+          <div class="crm-kpi-val" id="crm-kpi-total">69</div>
+          <div class="crm-kpi-sub">leads ativos (excl. perdidas)</div>
+        </div>
+        <div class="crm-kpi">
+          <div class="crm-kpi-label">Propostas enviadas</div>
+          <div class="crm-kpi-val" id="crm-kpi-propostas">2</div>
+          <div class="crm-kpi-sub">Grupo Viper · Aquila Card</div>
+        </div>
+        <div class="crm-kpi">
+          <div class="crm-kpi-label">Perdidas no período</div>
+          <div class="crm-kpi-val" id="crm-kpi-perdidas">31</div>
+          <div class="crm-kpi-sub">oportunidades encerradas</div>
+        </div>
+        <div class="crm-kpi">
+          <div class="crm-kpi-label">Prospects novos</div>
+          <div class="crm-kpi-val" id="crm-kpi-prospects">5</div>
+          <div class="crm-kpi-sub">em qualificação inicial</div>
+        </div>
+      </div>
+
+      <!-- Meta do Comercial -->
+      <div class="crm-meta-wrap">
+        <div class="crm-meta-title">Meta comercial — Ricardo · Jun/26</div>
+        <div class="crm-meta-main">
+          <div class="crm-ring">
+            <svg viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r="32" fill="none" stroke="#EBEBEB" stroke-width="8"/>
+              <circle cx="40" cy="40" r="32" fill="none" stroke="#FFD600" stroke-width="8"
+                stroke-dasharray="201" stroke-dashoffset="201" stroke-linecap="round"
+                transform="rotate(-90 40 40)" id="crm-ring-fill"/>
+              <text x="40" y="37" text-anchor="middle" font-size="13" font-weight="900" fill="#111">0%</text>
+              <text x="40" y="50" text-anchor="middle" font-size="8" fill="#888">da meta</text>
+            </svg>
+          </div>
+          <div class="crm-meta-info">
+            <div class="crm-meta-val">R$ 0</div>
+            <div class="crm-meta-desc">fechado em junho · meta: R$ 9.000</div>
+            <div style="margin-top:8px">
+              <div class="meta-track" style="height:8px;border-radius:4px"><div class="meta-fill" style="width:0%;background:#FFD600;border-radius:4px"></div></div>
+              <div style="display:flex;justify-content:space-between;margin-top:4px"><span style="font-size:10px;color:#999">R$ 0 fechado</span><span style="font-size:10px;color:#999">Meta: R$ 9.000</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="crm-comissao">
+          Comissão estimada: <strong>R$ 0</strong> &nbsp;|&nbsp; Faixa: 13% a 15% sobre o 1º mês do contrato &nbsp;|&nbsp; Potencial se fechar meta: <strong>R$ 1.170 a R$ 1.350</strong>
+        </div>
+      </div>
+
+      <!-- Pipeline -->
+      <div class="pipeline-wrap">
+        <div class="pipeline-title">Pipeline CRM — ClickUp · CRM OBO (atualizado agora)</div>
+        <div class="pipeline-cols">
+          <div class="pipe-col">
+            <div class="pipe-col-hd"><span class="pipe-col-title">Prospects</span><span class="pipe-count prospects">5</span></div>
+            <div class="pipe-card">[ACADI] Reno</div>
+            <div class="pipe-card">[BNI] Imaculada</div>
+            <div class="pipe-card">[BNI] Wettor</div>
+            <div class="pipe-card">Cantinho do Frango</div>
+            <div class="pipe-card">Evento BNI</div>
+          </div>
+          <div class="pipe-col">
+            <div class="pipe-col-hd"><span class="pipe-col-title">Contato feito</span><span class="pipe-count contato">1</span></div>
+            <div class="pipe-card">Tree House</div>
+          </div>
+          <div class="pipe-col">
+            <div class="pipe-col-hd"><span class="pipe-col-title">Proposta enviada</span><span class="pipe-count proposta">2</span></div>
+            <div class="pipe-card">Grupo Viper</div>
+            <div class="pipe-card">Aquila Card</div>
+          </div>
+          <div class="pipe-col">
+            <div class="pipe-col-hd"><span class="pipe-col-title">Negociação (bolo)</span><span class="pipe-count bolo">59</span></div>
+            <div class="pipe-card">Montreal Distribuidora</div>
+            <div class="pipe-card">Off Stage</div>
+            <div class="pipe-card">Nagaura</div>
+            <div class="pipe-card">Park (Cactus)</div>
+            <div class="pipe-card">UFC</div>
+            <div class="pipe-card">Grupo Laredo</div>
+            <div class="pipe-card">Bruno Pizza</div>
+            <div class="pipe-more">+ 52 mais no ClickUp</div>
+          </div>
+          <div class="pipe-col">
+            <div class="pipe-col-hd"><span class="pipe-col-title">Perdidas</span><span class="pipe-count perdidas">31</span></div>
+            <div class="pipe-card">Padaria bom de Trigo</div>
+            <div class="pipe-card">Imaculada / Tráfego</div>
+            <div class="pipe-card">Equilibra Engenharia</div>
+            <div class="pipe-card">Turatti</div>
+            <div class="pipe-more">+ 27 mais</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Insights Comercial -->
+      <div class="panel">
+        <div class="panel-hd"><span class="panel-title">Leitura do pipeline</span></div>
+        <div class="insight"><div class="ins-icon" style="background:#FEF9C3">📌</div><span class="ins-text">59 leads em "bolo" — carteira grande mas sem status claro de avanço. Priorizar follow-up nos mais quentes.</span></div>
+        <div class="insight"><div class="ins-icon" style="background:#DBEAFE">📄</div><span class="ins-text">Apenas 2 propostas enviadas no momento: Grupo Viper e Aquila Card. Foco em avançar esses dois para fechamento.</span></div>
+        <div class="insight"><div class="ins-icon" style="background:#DCFCE7">🎯</div><span class="ins-text">Meta de R$ 9.000/mês para Ricardo. Fechar 1 cliente de ticket médio (R$ 4.500) já cobre 50% da meta.</span></div>
+        <div class="insight"><div class="ins-icon" style="background:#FEE2E2">⚠️</div><span class="ins-text">31 perdidas acumuladas — vale revisar padrão: segmento, ticket, canal de origem.</span></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════
+         VIEW: FINANCEIRO
+    ══════════════════════════════════ -->
+    <div class="view" id="view-financeiro">
+      <div class="crm-kpi-row">
+        <div class="crm-kpi"><div class="crm-kpi-label">Receita do mês</div><div id="fin-kpi-entradas" class="crm-kpi-val" style="color:#22C55E">R$ 52.015</div><div class="crm-kpi-sub">mês corrente · Conta Azul</div></div>
+        <div class="crm-kpi"><div class="crm-kpi-label">Saídas do mês</div><div id="fin-kpi-saidas" class="crm-kpi-val" style="color:#EF4444">R$ 48.178</div><div class="crm-kpi-sub">Folha: R$ 24.454</div></div>
+        <div class="crm-kpi"><div class="crm-kpi-label">Resultado líquido</div><div id="fin-kpi-resultado" class="crm-kpi-val" style="color:#22C55E">+R$ 3.837</div><div class="crm-kpi-sub">Margem parcial do mês</div></div>
+        <div class="crm-kpi"><div class="crm-kpi-label">Saldo Banco Inter PJ</div><div id="fin-kpi-inter-saldo" class="crm-kpi-val" style="color:#F59E0B">R$ 143,32</div><div class="crm-kpi-sub">Atualizado via API Inter</div></div>
+      </div>
+      <div class="panel" style="margin-bottom:14px">
+        <div class="panel-hd"><span class="panel-title">Metas financeiras — Jun/26</span></div>
+        <div class="meta-block"><div class="meta-top"><span class="meta-name">Receita mensal</span><span class="meta-pct">80%</span></div><div class="meta-track"><div class="meta-fill" style="width:80%;background:#22C55E"></div></div><div class="meta-target">Meta: R$ 65.000 · Atual: R$ 52.015 (parcial)</div></div>
+        <div class="meta-block"><div class="meta-top"><span class="meta-name">Resultado líquido</span><span class="meta-pct">59%</span></div><div class="meta-track"><div class="meta-fill" style="width:59%;background:#F59E0B"></div></div><div class="meta-target">Meta: R$ 6.500 · Atual: R$ 3.837 (parcial)</div></div>
+        <div class="meta-block"><div class="meta-top"><span class="meta-name">Folha vs receita</span><span class="meta-pct">47%</span></div><div class="meta-track"><div class="meta-fill" style="width:47%;background:#22C55E"></div></div><div class="meta-target">Ideal: abaixo de 45% · Atual: 47% (R$24.454 / R$52.015)</div></div>
+        <div class="meta-block"><div class="meta-top"><span class="meta-name">Clientes ativos</span><span class="meta-pct">80%</span></div><div class="meta-track"><div class="meta-fill" style="width:80%;background:#3B82F6"></div></div><div class="meta-target">Meta: 20 clientes · Atual: 16</div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-hd"><span class="panel-title">Análise — abril/26 a junho/26</span></div>
+        <div class="insight"><div class="ins-icon" style="background:#FEF9C3">⚠️</div><span class="ins-text">Banco Inter PJ voltou ao positivo em 15/06 (R$143,32 após Pix de R$3.500 da Obo Studio). Conta Azul IP separada tem R$16.678,24. Saldo Inter ainda muito baixo — DAS de R$4.861,79 vence 20/06.</span></div>
+        <div class="insight"><div class="ins-icon" style="background:#FEE2E2">📉</div><span class="ins-text">Abril/26 foi o pior mês do período: receitas R$43.233 vs despesas R$56.842, resultado de -R$13.609.</span></div>
+        <div class="insight"><div class="ins-icon" style="background:#DCFCE7">⭐</div><span class="ins-text">Maio (+R$3.508) e Junho (+R$3.837 parcial) recuperaram e fecharam no positivo.</span></div>
+        <div class="insight"><div class="ins-icon" style="background:#DCFCE7">✅</div><span class="ins-text">Folha caiu para 47% da receita em jun (era 52%) — quase dentro do ideal de 45%.</span></div>
+        <div class="insight"><div class="ins-icon" style="background:#FEF9C3">💸</div><span class="ins-text">Antecipação de lucros do Kauê (R$10.000) está vencida desde 07/06 e segue em aberto — pesa no caixa.</span></div>
+        <div class="insight"><div class="ins-icon" style="background:#DBEAFE">📊</div><span class="ins-text">Para atingir a meta de R$65k em jun, faltam R$12.985 — mês ainda em andamento.</span></div>
+      </div>
+
+      <!-- PAINEL RECEITAS PREVISTAS vs REALIZADAS -->
+      <div class="panel" style="margin-bottom:14px">
+        <div class="panel-hd"><span class="panel-title">Receitas — Previsto vs Realizado</span><span style="font-size:10px;color:#999">Base: contratos recorrentes · R$ 47.221/mês</span></div>
+        <!-- Cabeçalho -->
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;padding:4px 0 6px;border-bottom:1px solid #EBEBEB">
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase">Mês</span>
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase">Realização</span>
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase;text-align:right">Previsto</span>
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase;text-align:right">Realizado</span>
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase;text-align:right">%</span>
+        </div>
+        <!-- Jan -->
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+          <span style="font-size:11px;font-weight:600">Jan/26</span>
+          <div style="height:6px;background:#EBEBEB;border-radius:3px;overflow:hidden"><div style="width:16%;height:100%;background:#EF4444;border-radius:3px"></div></div>
+          <span style="font-size:11px;color:#666;text-align:right">R$ 47.221</span>
+          <span style="font-size:11px;font-weight:700;color:#EF4444;text-align:right">R$ 7.787</span>
+          <span style="font-size:11px;font-weight:700;color:#EF4444;text-align:right">16%</span>
+        </div>
+        <!-- Fev -->
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+          <span style="font-size:11px;font-weight:600">Fev/26</span>
+          <div style="height:6px;background:#EBEBEB;border-radius:3px;overflow:hidden"><div style="width:100%;height:100%;background:#22C55E;border-radius:3px"></div></div>
+          <span style="font-size:11px;color:#666;text-align:right">R$ 47.221</span>
+          <span style="font-size:11px;font-weight:700;color:#22C55E;text-align:right">R$ 48.882</span>
+          <span style="font-size:11px;font-weight:700;color:#22C55E;text-align:right">104%</span>
+        </div>
+        <!-- Mar -->
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+          <span style="font-size:11px;font-weight:600">Mar/26</span>
+          <div style="height:6px;background:#EBEBEB;border-radius:3px;overflow:hidden"><div style="width:92%;height:100%;background:#F59E0B;border-radius:3px"></div></div>
+          <span style="font-size:11px;color:#666;text-align:right">R$ 47.221</span>
+          <span style="font-size:11px;font-weight:700;color:#F59E0B;text-align:right">R$ 43.326</span>
+          <span style="font-size:11px;font-weight:700;color:#F59E0B;text-align:right">92%</span>
+        </div>
+        <!-- Abr -->
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+          <span style="font-size:11px;font-weight:600">Abr/26</span>
+          <div style="height:6px;background:#EBEBEB;border-radius:3px;overflow:hidden"><div style="width:100%;height:100%;background:#22C55E;border-radius:3px"></div></div>
+          <span style="font-size:11px;color:#666;text-align:right">R$ 47.221</span>
+          <span style="font-size:11px;font-weight:700;color:#22C55E;text-align:right">R$ 51.370</span>
+          <span style="font-size:11px;font-weight:700;color:#22C55E;text-align:right">109%</span>
+        </div>
+        <!-- Mai -->
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+          <span style="font-size:11px;font-weight:600">Mai/26</span>
+          <div style="height:6px;background:#EBEBEB;border-radius:3px;overflow:hidden"><div style="width:90%;height:100%;background:#F59E0B;border-radius:3px"></div></div>
+          <span style="font-size:11px;color:#666;text-align:right">R$ 47.221</span>
+          <span style="font-size:11px;font-weight:700;color:#F59E0B;text-align:right">R$ 42.505</span>
+          <span style="font-size:11px;font-weight:700;color:#F59E0B;text-align:right">90%</span>
+        </div>
+        <!-- Jun parcial -->
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;align-items:center;padding:7px 0;border-bottom:1px solid #EBEBEB">
+          <div>
+            <span style="font-size:11px;font-weight:600">Jun/26</span>
+            <div style="font-size:9px;color:#999">parcial</div>
+          </div>
+          <div style="height:6px;background:#EBEBEB;border-radius:3px;overflow:hidden"><div style="width:100%;height:100%;background:#22C55E;border-radius:3px"></div></div>
+          <span style="font-size:11px;color:#666;text-align:right">R$ 47.221</span>
+          <span style="font-size:11px;font-weight:700;color:#22C55E;text-align:right">R$ 52.015</span>
+          <span style="font-size:11px;font-weight:700;color:#22C55E;text-align:right">110%</span>
+        </div>
+        <div style="font-size:10px;color:#999;margin-top:8px">Jun/26 parcial (extrato Conta Azul IP até 16/06). R$15.254,22 confirmados recebidos — ALF 2/4, Antares e Seven pagos conforme extrato. R$34.761,07 ainda a entrar na segunda quinzena.</div>
+      </div>
+
+      <!-- PAINEL DESPESAS PREVISTAS vs REALIZADAS -->
+      <div class="panel" style="margin-bottom:14px">
+        <div class="panel-hd"><span class="panel-title">Despesas — Previsto vs Realizado</span><span style="font-size:10px;color:#999">Fonte: Conta Azul</span></div>
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;padding:4px 0 6px;border-bottom:1px solid #EBEBEB">
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase">Mês</span>
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase">Realização</span>
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase;text-align:right">Previsto</span>
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase;text-align:right">Realizado</span>
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase;text-align:right">%</span>
+        </div>
+        <!-- Jan - dado incompleto -->
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+          <span style="font-size:11px;font-weight:600">Jan/26</span>
+          <div style="height:6px;background:#EBEBEB;border-radius:3px;overflow:hidden"><div style="width:32%;height:100%;background:#22C55E;border-radius:3px"></div></div>
+          <span style="font-size:11px;color:#666;text-align:right">R$ 48.000</span>
+          <span style="font-size:11px;font-weight:700;color:#22C55E;text-align:right">R$ 15.145</span>
+          <span style="font-size:11px;font-weight:700;color:#999;text-align:right">—</span>
+        </div>
+        <!-- Fev -->
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+          <span style="font-size:11px;font-weight:600">Fev/26</span>
+          <div style="height:6px;background:#EBEBEB;border-radius:3px;overflow:hidden"><div style="width:82%;height:100%;background:#22C55E;border-radius:3px"></div></div>
+          <span style="font-size:11px;color:#666;text-align:right">R$ 48.000</span>
+          <span style="font-size:11px;font-weight:700;color:#22C55E;text-align:right">R$ 39.367</span>
+          <span style="font-size:11px;font-weight:700;color:#22C55E;text-align:right">82%</span>
+        </div>
+        <!-- Mar -->
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+          <span style="font-size:11px;font-weight:600">Mar/26</span>
+          <div style="height:6px;background:#EBEBEB;border-radius:3px;overflow:hidden"><div style="width:97%;height:100%;background:#F59E0B;border-radius:3px"></div></div>
+          <span style="font-size:11px;color:#666;text-align:right">R$ 48.000</span>
+          <span style="font-size:11px;font-weight:700;color:#F59E0B;text-align:right">R$ 46.676</span>
+          <span style="font-size:11px;font-weight:700;color:#F59E0B;text-align:right">97%</span>
+        </div>
+        <!-- Abr - extrapolou -->
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+          <span style="font-size:11px;font-weight:600">Abr/26</span>
+          <div style="height:6px;background:#EBEBEB;border-radius:3px;overflow:hidden"><div style="width:100%;height:100%;background:#EF4444;border-radius:3px"></div></div>
+          <span style="font-size:11px;color:#666;text-align:right">R$ 48.000</span>
+          <span style="font-size:11px;font-weight:700;color:#EF4444;text-align:right">R$ 62.089</span>
+          <span style="font-size:11px;font-weight:700;color:#EF4444;text-align:right">129%</span>
+        </div>
+        <!-- Mai -->
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+          <span style="font-size:11px;font-weight:600">Mai/26</span>
+          <div style="height:6px;background:#EBEBEB;border-radius:3px;overflow:hidden"><div style="width:100%;height:100%;background:#EF4444;border-radius:3px"></div></div>
+          <span style="font-size:11px;color:#666;text-align:right">R$ 48.000</span>
+          <span style="font-size:11px;font-weight:700;color:#EF4444;text-align:right">R$ 54.398</span>
+          <span style="font-size:11px;font-weight:700;color:#EF4444;text-align:right">113%</span>
+        </div>
+        <!-- Jun parcial -->
+        <div style="display:grid;grid-template-columns:70px 1fr 90px 90px 60px;gap:4px;align-items:center;padding:7px 0;border-bottom:1px solid #EBEBEB">
+          <div>
+            <span style="font-size:11px;font-weight:600">Jun/26</span>
+            <div style="font-size:9px;color:#999">parcial</div>
+          </div>
+          <div style="height:6px;background:#EBEBEB;border-radius:3px;overflow:hidden"><div style="width:100%;height:100%;background:#EF4444;border-radius:3px"></div></div>
+          <span style="font-size:11px;color:#666;text-align:right">R$ 33.465</span>
+          <span style="font-size:11px;font-weight:700;color:#EF4444;text-align:right">R$ 48.178</span>
+          <span style="font-size:11px;font-weight:700;color:#EF4444;text-align:right">144%</span>
+        </div>
+        <div style="font-size:10px;color:#999;margin-top:8px">Jun acima do previsto: folha R$24.454 + antecipação de lucros vencida do Kaué (R$10.000) pesam no total de R$48.178. Ainda há R$5.056,79 a vencer (DAS + Associação).</div>
+      </div>
+
+            <!-- PAINEL RECEBIMENTOS POR CLIENTE -->
+      <div class="panel" style="margin-bottom:14px">
+        <div class="panel-hd"><span class="panel-title">Recebido em Jun/26 — por cliente</span><span style="font-size:10px;color:#22C55E;font-weight:700">R$ 15.254,22 recebidos · Conta Azul IP até 16/06</span></div>
+        <div style="margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#0891B2"></div><span style="font-size:12px">Bruno Ary (Venda 128)</span></div>
+            <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 3.997,81</span><span style="font-size:10px;color:#999;margin-left:6px">05/06</span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#0F766E"></div><span style="font-size:12px">Colégio Antares (Venda 126)</span></div>
+            <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 3.689,88</span><span style="font-size:10px;color:#999;margin-left:6px">15/06</span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#7C3AED"></div><span style="font-size:12px">Seven Motors (Venda 129)</span></div>
+            <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 3.719,60</span><span style="font-size:10px;color:#999;margin-left:6px">16/06</span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#9CA3AF"></div><span style="font-size:12px">Expedito Carneiro (Venda 85 - 4/4)</span></div>
+            <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 2.010,31</span><span style="font-size:10px;color:#999;margin-left:6px">10/06</span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#2563EB"></div><span style="font-size:12px">A L F Felipe (1/4)</span></div>
+            <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 697,81</span><span style="font-size:10px;color:#999;margin-left:6px">05/06</span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#2563EB"></div><span style="font-size:12px">A L F Felipe (2/4)</span></div>
+            <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 697,81</span><span style="font-size:10px;color:#999;margin-left:6px">12/06</span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#A16207"></div><span style="font-size:12px">BR Docs (diferença)</span></div>
+            <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 441,80</span><span style="font-size:10px;color:#999;margin-left:6px">10/06</span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #EBEBEB;margin-top:4px">
+            <span style="font-size:11px;font-weight:700;color:#111">Total recebido em jun</span>
+            <span style="font-size:13px;font-weight:900;color:#22C55E">R$ 15.254,22</span>
+          </div>
+          <div style="font-size:10px;color:#999;margin-top:6px">Restam R$34.701,43 a vencer até 30/06 (sem vencidos em aberto). Último extrato: 16/06.</div>
+        </div>
+      </div>
+
+      <!-- PAINEL EM ABERTO / ATRASADO -->
+      <div class="panel" style="margin-bottom:14px">
+        <div class="panel-hd"><span class="panel-title">A receber — Jun/26</span><span style="font-size:10px;color:#3B82F6;font-weight:700">R$ 34.701,43 a vencer · 0 vencidos · até 16/06</span></div>
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+            <div>
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#E11D48"></div><span style="font-size:12px;font-weight:600">Bem Comum</span></div>
+              <div style="font-size:10px;color:#999;margin-top:1px;margin-left:16px">Venc. 30/06/2026 · mensalidade jun</div>
+            </div>
+            <span style="font-size:12px;font-weight:700;color:#3B82F6">R$ 14.578,00</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+            <div>
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#A16207"></div><span style="font-size:12px;font-weight:600">BR Docs</span></div>
+              <div style="font-size:10px;color:#999;margin-top:1px;margin-left:16px">Venc. 22/06/2026</div>
+            </div>
+            <span style="font-size:12px;font-weight:700;color:#3B82F6">R$ 4.001,25</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+            <div>
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#0F766E"></div><span style="font-size:12px;font-weight:600">Colégio Antares</span></div>
+              <div style="font-size:10px;color:#999;margin-top:1px;margin-left:16px">Venc. 19/06/2026</div>
+            </div>
+            <span style="font-size:12px;font-weight:700;color:#3B82F6">R$ 3.722,18</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
+            <div>
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#059669"></div><span style="font-size:12px;font-weight:600">Ênio</span></div>
+              <div style="font-size:10px;color:#999;margin-top:1px;margin-left:16px">Venc. 20/06/2026</div>
+            </div>
+            <span style="font-size:12px;font-weight:700;color:#3B82F6">R$ 3.500,00</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #EBEBEB">
+            <span style="font-size:11px;color:#999">+ 5 itens (Eady, Fabsol, S Vistorias, A L F Felipe 3/4 e 4/4, BRDOCS 22/06)</span>
+            <span style="font-size:12px;font-weight:700;color:#3B82F6">R$ 12.900,00</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0 2px">
+            <span style="font-size:11px;font-weight:700;color:#111">Total a receber</span>
+            <span style="font-size:14px;font-weight:900;color:#3B82F6">R$ 34.701,43</span>
+          </div>
+          <div style="font-size:10px;color:#22C55E;margin-top:4px">✓ Seven Motors, Colégio Antares (15/06) e A L F Felipe (2/4) confirmados pagos no extrato Conta Azul IP.</div>
+        </div>
+      </div>
+
+      <!-- PAINEL CONTAS A PAGAR -->
+      <div class="panel" style="margin-bottom:14px">
+        <div class="panel-hd">
+          <span class="panel-title">Contas a pagar · vencidas e a vencer (Jun/26)</span>
+          <span style="font-size:10px;font-weight:700;color:#EF4444;background:#FEE2E2;padding:2px 8px;border-radius:10px">R$ 10.000,00 vencido há 11 dias</span>
+        </div>
+        <!-- Cabeçalho -->
+        <div style="display:grid;grid-template-columns:1fr 90px 70px 90px;gap:4px;padding:4px 0 6px;border-bottom:1px solid #EBEBEB">
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase">Descrição</span>
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase;text-align:center">Vencimento</span>
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase;text-align:center">Status</span>
+          <span style="font-size:9px;font-weight:700;color:#AAA;text-transform:uppercase;text-align:right">Valor</span>
+        </div>
+        <!-- Antecipação Kauê - vencido -->
+        <div style="display:grid;grid-template-columns:1fr 90px 70px 90px;gap:4px;align-items:center;padding:8px 0;border-bottom:1px solid #F5F5F5">
+          <div style="display:flex;align-items:center;gap:7px">
+            <div style="width:8px;height:8px;border-radius:50%;background:#991B1B;flex-shrink:0"></div>
+            <span style="font-size:12px;font-weight:600">Antecipação de Lucros — Kauê</span>
+          </div>
+          <span style="font-size:11px;color:#666;text-align:center">07/06/2026</span>
+          <span style="font-size:11px;font-weight:800;color:#EF4444;text-align:center;background:#FEE2E2;border-radius:6px;padding:2px 6px">vencido 11d</span>
+          <span style="font-size:12px;font-weight:700;color:#EF4444;text-align:right">R$ 10.000</span>
+        </div>
+        <!-- DAS - a vencer -->
+        <div style="display:grid;grid-template-columns:1fr 90px 70px 90px;gap:4px;align-items:center;padding:8px 0;border-bottom:1px solid #F5F5F5">
+          <div style="display:flex;align-items:center;gap:7px">
+            <div style="width:8px;height:8px;border-radius:50%;background:#F59E0B;flex-shrink:0"></div>
+            <span style="font-size:12px;font-weight:600">DAS — Simples Nacional</span>
+          </div>
+          <span style="font-size:11px;color:#666;text-align:center">20/06/2026</span>
+          <span style="font-size:11px;font-weight:800;color:#F59E0B;text-align:center;background:#FEF9C3;border-radius:6px;padding:2px 6px">a vencer</span>
+          <span style="font-size:12px;font-weight:700;color:#F59E0B;text-align:right">R$ 4.861,79</span>
+        </div>
+        <!-- Associação Cearense - PAGO -->
+        <div style="display:grid;grid-template-columns:1fr 90px 70px 90px;gap:4px;align-items:center;padding:8px 0;border-bottom:1px solid #EBEBEB;opacity:0.6">
+          <div style="display:flex;align-items:center;gap:7px">
+            <div style="width:8px;height:8px;border-radius:50%;background:#22C55E;flex-shrink:0"></div>
+            <span style="font-size:12px;font-weight:600;text-decoration:line-through">Associação Cearense de Agentes Digitais</span>
+          </div>
+          <span style="font-size:11px;color:#666;text-align:center">15/06/2026</span>
+          <span style="font-size:11px;font-weight:800;color:#22C55E;text-align:center;background:#DCFCE7;border-radius:6px;padding:2px 6px">pago 15/06</span>
+          <span style="font-size:12px;font-weight:700;color:#22C55E;text-align:right">R$ 195,00</span>
+        </div>
+        <!-- Total -->
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0 ">
+          <span style="font-size:11px;font-weight:700;color:#111">Total em aberto (pagar)</span>
+          <span style="font-size:15px;font-weight:900;color:#EF4444">R$ 14.861,79</span>
+        </div>
+        <div style="font-size:10px;color:#999;margin-top:6px">Antecipação de lucros (R$10.000) segue vencida e não aparece paga no extrato Conta Azul IP. DAS R$4.861,79 vence em 20/06 —  2 dias.</div>
+      </div>
+
+    </div><!-- /view-financeiro -->
+
+        <!-- ══════════════════════════════════
+         VIEW: CLIENTES
+    ══════════════════════════════════ -->
+    <div class="view" id="view-clientes">
+      <div class="tbl-wrap">
+        <div class="tbl-top"><span class="tbl-title">Clientes ativos — Jun/26</span></div>
+        <table>
+          <thead><tr><th>Cliente</th><th>Ticket</th><th>Health Score</th><th>Status Op.</th><th>Status Mkt</th><th>Obs.</th></tr></thead>
+          <tbody>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#E11D48">BC</div>Bem Comum</div></td><td>R$ 14.578</td><td><div class="hs-wrap"><span class="hs-num">92</span><div class="hs-bar"><div class="hs-fill" style="width:92%;background:#22C55E"></div></div></div></td><td><span class="sbadge ex">Excelente</span></td><td><span class="sbadge ex">Ativo</span></td><td style="font-size:10px;color:#888">Âncora · 30% receita</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#6B7280">XP</div>XPTO</div></td><td>R$ 4.500</td><td><div class="hs-wrap"><span class="hs-num">74</span><div class="hs-bar"><div class="hs-fill" style="width:74%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">3 meses adiant. · renovação set</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#7C3AED">SE</div>Seven Motors</div></td><td>R$ 3.722</td><td><div class="hs-wrap"><span class="hs-num">58</span><div class="hs-bar"><div class="hs-fill" style="width:58%;background:#F59E0B"></div></div></div></td><td><span class="sbadge ri">Risco</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">Sem entrega 15d · mai pagou 2x</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#0F766E">AN</div>Antares</div></td><td>R$ 3.690</td><td><div class="hs-wrap"><span class="hs-num">80</span><div class="hs-bar"><div class="hs-fill" style="width:80%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge ex">Ativo</span></td><td style="font-size:10px;color:#888">Fixo R$3.690 + extras captação</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#0891B2">BA</div>Bruno Ary</div></td><td>R$ 3.998</td><td><div class="hs-wrap"><span class="hs-num">76</span><div class="hs-bar"><div class="hs-fill" style="width:76%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">1 mês registrado</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#059669">EN</div>Ênio</div></td><td>R$ 3.498</td><td><div class="hs-wrap"><span class="hs-num">72</span><div class="hs-bar"><div class="hs-fill" style="width:72%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">-</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#A16207">BR</div>BR Docs</div></td><td>R$ 2.939</td><td><div class="hs-wrap"><span class="hs-num">74</span><div class="hs-bar"><div class="hs-fill" style="width:74%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">-</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#166534">FA</div>Fabsol</div></td><td>R$ 2.000</td><td><div class="hs-wrap"><span class="hs-num">82</span><div class="hs-bar"><div class="hs-fill" style="width:82%;background:#3B82F6"></div></div></div></td><td><span class="sbadge ex">Excelente</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">+entregas mês</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#D97706">SV</div>S Vistorias</div></td><td>R$ 2.998</td><td><div class="hs-wrap"><span class="hs-num">71</span><div class="hs-bar"><div class="hs-fill" style="width:71%;background:#3B82F6"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">-</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#BE185D">EA</div>Eady</div></td><td>R$ 2.498</td><td><div class="hs-wrap"><span class="hs-num">62</span><div class="hs-bar"><div class="hs-fill" style="width:62%;background:#F59E0B"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge at">Atenção</span></td><td style="font-size:10px;color:#888">Encerra 22/6</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#2563EB">AL</div>Alplast</div></td><td>R$ 2.800</td><td><div class="hs-wrap"><span class="hs-num">70</span><div class="hs-bar"><div class="hs-fill" style="width:70%;background:#3B82F6"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">4x sem. · 1 mês em aberto</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tbl-wrap" style="margin-top:14px">
+        <div class="tbl-top"><span class="tbl-title">Métricas de clientes — Redes sociais (Reportei, 12/05 a 11/06/26)</span></div>
+        <div class="ps-grid" style="grid-template-columns:repeat(4,1fr);padding:0 16px 12px">
+          <div class="ps-stat"><div class="ps-num">1,32M</div><div class="ps-lbl">Visualizações Instagram (total)</div></div>
+          <div class="ps-stat"><div class="ps-num">747,5k</div><div class="ps-lbl">Alcance Instagram (total)</div></div>
+          <div class="ps-stat"><div class="ps-num">23,1k</div><div class="ps-lbl">Visitas ao perfil (total)</div></div>
+          <div class="ps-stat"><div class="ps-num">11</div><div class="ps-lbl">Clientes monitorados</div></div>
+        </div>
+        <table>
+          <thead><tr><th>Cliente</th><th>Visualizações IG</th><th>Alcance IG</th><th>Visitas ao perfil</th><th>Obs.</th></tr></thead>
+          <tbody>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#0F766E">AN</div>Antares</div></td><td>655.370</td><td>421.234</td><td>12.243</td><td style="font-size:10px;color:#888">Maior alcance · forte mídia paga (R$189k de alcance pago)</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#7C3AED">SE</div>Seven Motors</div></td><td>187.511</td><td>63.265</td><td>3.714</td><td style="font-size:10px;color:#888">Cliente em risco operacional, mas mídia performando</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#A16207">BR</div>BR Docs</div></td><td>134.093</td><td>114.306</td><td>772</td><td style="font-size:10px;color:#888">Alcance pago alto (Meta Ads CPC R$1,00)</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#6B7280">XP</div>XPTO</div></td><td>132.582</td><td>64.523</td><td>610</td><td style="font-size:10px;color:#888">Alcance quase 100% orgânico</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#E11D48">BC</div>Bem Comum</div></td><td>92.747</td><td>28.273</td><td>1.034</td><td style="font-size:10px;color:#888">Maior cliente em receita · alcance só orgânico</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#2563EB">AL</div>Alplast</div></td><td>44.814</td><td>14.070</td><td>2.347</td><td style="font-size:10px;color:#888">Maior auxa de visitas ao perfil vs alcance</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#9333EA">CA</div>C&amp;A Escolas</div></td><td>27.497</td><td>18.443</td><td>1.149</td><td style="font-size:10px;color:#888">Cliente novo detectado no Reportei, fora da lista de ativos</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#BE185D">EA</div>Eady</div></td><td>17.352</td><td>13.944</td><td>190</td><td style="font-size:10px;color:#888">Contrato encerra 22/6</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#0891B2">BA</div>Bruno Ary</div></td><td>16.508</td><td>4.454</td><td>612</td><td style="font-size:10px;color:#888">-</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#D97706">SV</div>S Vistorias</div></td><td>7.905</td><td>4.512</td><td>361</td><td style="font-size:10px;color:#888">Google Ads ativo (171 cliques, 4 conversões)</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#166534">FA</div>Fabsol</div></td><td>1.041</td><td>530</td><td>42</td><td style="font-size:10px;color:#888">Volume baixo no período</td></tr>
+          </tbody>
+        </table>
+        <div style="padding:8px 16px 14px;font-size:9.5px;color:#999">Obo Studio: erro 502 no Reportei, sem dados de Instagram no período · Ênio: ativo no dashboard mas sem projeto cadastrado no Reportei</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════
+         VIEW: PROJETOS
+    ══════════════════════════════════ -->
+    <div class="view" id="view-projetos">
+      <div class="section-hd" style="margin-bottom:10px"><span class="section-title">Operação — Kanban de projetos</span></div>
+      <div class="kanban">
+        <div class="kb-col"><div class="kb-hd"><span class="kb-title">Hoje</span><span class="kb-badge y">5</span></div><div class="kb-card"><div class="kb-card-ttl">BEM COMUM — Relatório do Mês</div><div class="kb-card-sub">Cliente: Bem Comum</div></div><div class="kb-card"><div class="kb-card-ttl">FABSOL — Destaques Insta</div><div class="kb-card-sub">Cliente: Fabsol</div></div><div class="kb-card"><div class="kb-card-ttl">FABSOL — Cronograma BJun</div><div class="kb-card-sub">Cliente: Fabsol</div></div><div class="kb-card"><div class="kb-card-ttl">S VISTORIAS — Semana 8-14/6</div><div class="kb-card-sub">Cliente: S Vistorias</div></div><div class="kb-card"><div class="kb-card-ttl">S VISTORIAS — Plano de Mídias</div><div class="kb-card-sub">Cliente: S Vistorias</div></div></div>
+        <div class="kb-col"><div class="kb-hd"><span class="kb-title">Em andamento</span><span class="kb-badge b">14</span></div><div class="kb-card"><div class="kb-card-ttl">EXPEDITO — Padrões PPT</div><div class="kb-card-sub">Cliente: Expedito</div><span class="kb-tag ag">Aguardando</span></div><div class="kb-card"><div class="kb-card-ttl">SEVEN — Peças KV</div><div class="kb-card-sub">Cliente: Seven</div><span class="kb-tag ag">Aguardando</span></div><div class="kb-card"><div class="kb-card-ttl">EADY — Crono 1º Quinz. Jun</div><div class="kb-card-sub">Cliente: Eady</div><span class="kb-tag ag">Aguardando</span></div><div class="kb-card"><div class="kb-card-ttl">LP SEVEN — Briefing</div><div class="kb-card-sub">Cliente: Seven</div></div><div class="kb-card"><div class="kb-card-ttl">APLAST �> Esqueleto Jun</div><div class="kb-card-sub">Cliente: Alplast</div></div><div class="kb-more">+ 9 mais</div></div>
+        <div class="kb-col"><div class="kb-hd"><span class="kb-title">Travadas</span><span class="kb-badge r">8</span></div><div class="kb-card"><div class="kb-card-ttl">EXPEDITO — Site</div><div class="kb-card-sub">Cliente: Expedito</div><span class="kb-tag at">Em atraso</span></div><div class="kb-card"><div class="kb-card-ttl">ÊNIO — Tela Edusummit</div><div class="kb-card-sub">Cliente: ÊNio</div><span class="kb-tag at">Em atraso</span></div><div class="kb-card"><div class="kb-card-ttl">FABSOL — Catálogo</div><div class="kb-card-sub">Cliente: Fabsol</div><span class="kb-tag pe">Stand-by</span></div><div class="kb-more">+ 5 mais</div></div>
+        <div class="kb-col"><div class="kb-hd"><span class="kb-title">Concluídas</span><span class="kb-badge g">27</span></div><div class="kb-card"><div class="kb-card-ttl">ANTARES — Esquel. Junho</div><div class="kb-card-sub">Cliente: Antares</div><span class="kb-tag ok">Aprovado</span></div><div class="kb-card"><div class="kb-card-ttl">ANTARES — Edicção Vídeo Dia Måes</div><div class="kb-card-sub">Cliente: Antares</div><span class="kb-tag ok">Aprovado</span></div><div class="kb-card"><div class="kb-card-ttl">XPTO— Esquel. Mensal</div><div class="kb-card-sub">Cliente: Xpto</div><span class="kb-tag ok">Finalizado</span></div><div class="kb-more">+ 24 mais</div></div>
+      </div>
+    </div>
+
+  </div><!-- /scroll -->
+</div><!-- /main -->
+
+<script>
+  var titles = {
+    'dashboard': ['Bom dia, Kaué. 👋', 'Quinta-feira, 18 de junho de 2026 · extrato Conta Azul IP até 16/06 · Inter até 15/06'],
+    'comercial': ['Comercial', 'Pipeline CRM · Meta do Ricardo · Jun/26'],
+    'financeiro': ['Financeiro', 'DRE resumida · Metas · Análise mensal'],
+    'clientes': ['Clientes ativos', 'Health score e status operacional'],
+    'projetos': ['Projetos & Tarefas', 'Kanban operacional · Trello']
+  };
+
+  document.querySelectorAll('.nav-item').forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      var view = this.getAttribute('data-view') || 'dashboard';
+
+      document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+      this.classList.add('active');
+
+      document.querySelectorAll('.view').forEach(function(vB�{ v.classList.remove('active'); });
+      var target = document.getElementById('view-' + view);
+      if (target) target.classList.add('active');
+
+      var t = titles[view] || titles['dashboard'];
+      document.getElementById('topbar-title').textContent = t[0];
+      document.getElementById('topbar-sub').textContent = t[1];
+    });
+  });
+
+  // Links internos nos painéis
+  document.querySelectorAll('[data-view]').forEach(function(el) {
+    if (el.tagName === 'A') {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        var view = this.getAttribute('data-view');
+        var navItem = document.querySelector('.nav-item[data-view="' + view + '"]');
+        if (navItem) navItem.click();
+      });
+    }
+  });
+</script>
+<script src="/loader.js"></script>
+</body>
+</html>
