@@ -204,7 +204,7 @@ tbody tr:last-child td{border-bottom:none}
     Reuniões
   </a>
   <div class="nav-label">Pessoas</div>
-  <a class="nav-item" href="#" data-view="dashboard">
+  <a class="nav-item" href="#" data-view="time">
     <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="5" cy="5" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="11" cy="5" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M1 13c0-2.21 1.79-4 4-4s4 1.79 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11 9c1.1 0 2 .44 2.69 1.14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     Time
   </a>
@@ -851,6 +851,258 @@ tbody tr:last-child td{border-bottom:none}
     </div>
 
   </div><!-- /scroll -->
+
+    <!-- ══════════════════════════════════
+         VIEW: TIME
+    ══════════════════════════════════ -->
+    <div class="view" id="view-time">
+      <div class="section-hd" style="margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <h2 class="section-title">Time & Parceiros</h2>
+          <p style="color:#888;font-size:13px;margin-top:4px;">Cadastro de colaboradores e parceiros da Obo Studio</p>
+        </div>
+        <button class="btn-primary" onclick="abrirModalParceiro()" style="display:flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Adicionar Parceiro
+        </button>
+      </div>
+
+      <!-- Stats rápidas -->
+      <div class="kpi-grid" style="margin-bottom:24px;" id="time-stats">
+        <div class="kpi-card"><div class="kpi-label">Total Parceiros</div><div class="kpi-value" id="stat-total">0</div></div>
+        <div class="kpi-card"><div class="kpi-label">Com Contrato</div><div class="kpi-value" id="stat-contrato">0</div></div>
+        <div class="kpi-card"><div class="kpi-label">Investimento/mês</div><div class="kpi-value" id="stat-valor">R$ 0</div></div>
+      </div>
+
+      <!-- Lista de parceiros -->
+      <div id="parceiros-lista" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;"></div>
+      <div id="parceiros-vazio" style="display:none;text-align:center;padding:60px 20px;color:#888;">
+        <svg width="48" height="48" fill="none" stroke="#ccc" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:12px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <p style="font-weight:600;color:#555;margin-bottom:4px;">Nenhum parceiro cadastrado</p>
+        <p style="font-size:13px;">Clique em "Adicionar Parceiro" para começar</p>
+      </div>
+    </div>
+
+    <!-- MODAL PARCEIRO -->
+    <div id="modal-parceiro" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center;padding:20px;">
+      <div style="background:#fff;border-radius:16px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;">
+        <div style="padding:24px 24px 0;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee;padding-bottom:16px;">
+          <h3 id="modal-titulo" style="font-size:16px;font-weight:700;">Novo Parceiro</h3>
+          <button onclick="fecharModalParceiro()" style="background:none;border:none;cursor:pointer;color:#888;padding:4px;">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <form id="form-parceiro" onsubmit="salvarParceiro(event)" style="padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <input type="hidden" id="parceiro-id">
+          <div style="grid-column:1/-1;">
+            <label class="form-label">Nome completo *</label>
+            <input class="form-input" type="text" id="p-nome" required placeholder="Nome do parceiro">
+          </div>
+          <div>
+            <label class="form-label">Função / Cargo</label>
+            <input class="form-input" type="text" id="p-funcao" placeholder="Ex: Designer, Dev, Social Media">
+          </div>
+          <div>
+            <label class="form-label">E-mail</label>
+            <input class="form-input" type="email" id="p-email" placeholder="email@exemplo.com">
+          </div>
+          <div>
+            <label class="form-label">Telefone</label>
+            <input class="form-input" type="text" id="p-telefone" placeholder="(11) 99999-9999">
+          </div>
+          <div>
+            <label class="form-label">CPF</label>
+            <input class="form-input" type="text" id="p-cpf" placeholder="000.000.000-00">
+          </div>
+          <div>
+            <label class="form-label">CNPJ</label>
+            <input class="form-input" type="text" id="p-cnpj" placeholder="00.000.000/0000-00">
+          </div>
+          <div style="grid-column:1/-1;">
+            <label class="form-label">Razão Social</label>
+            <input class="form-input" type="text" id="p-razao" placeholder="Nome da empresa (se PJ)">
+          </div>
+          <div style="grid-column:1/-1;">
+            <label class="form-label">Endereço</label>
+            <input class="form-input" type="text" id="p-endereco" placeholder="Rua, número, bairro, cidade - UF">
+          </div>
+          <div>
+            <label class="form-label">Valor contratado (R$/mês)</label>
+            <input class="form-input" type="number" id="p-valor" placeholder="0,00" step="0.01" min="0">
+          </div>
+          <div>
+            <label class="form-label">Tem contrato?</label>
+            <select class="form-input" id="p-contrato">
+              <option value="sim">Sim — contrato assinado</option>
+              <option value="nao">Não — sem contrato formal</option>
+              <option value="pendente">Pendente — em negociação</option>
+            </select>
+          </div>
+          <div style="grid-column:1/-1;">
+            <label class="form-label">Clientes que atende</label>
+            <input class="form-input" type="text" id="p-clientes" placeholder="Ex: Brdocs, Cliente A, Cliente B (separados por vírgula)">
+            <small style="color:#888;font-size:11px;margin-top:4px;display:block;">Usado futuramente para cálculo de rateio por cliente</small>
+          </div>
+          <div style="grid-column:1/-1;display:flex;gap:12px;justify-content:flex-end;padding-top:8px;border-top:1px solid #eee;margin-top:4px;">
+            <button type="button" onclick="fecharModalParceiro()" style="padding:10px 20px;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer;font-weight:500;">Cancelar</button>
+            <button type="submit" class="btn-primary">Salvar Parceiro</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <style>
+      .form-label{display:block;font-size:11px;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;}
+      .form-input{width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none;transition:border .15s;background:#fafafa;box-sizing:border-box;}
+      .form-input:focus{border-color:#ffd600;background:#fff;}
+      .btn-primary{padding:10px 18px;background:#ffd600;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;color:#111;}
+      .btn-primary:hover{background:#f0ca00;}
+      .parceiro-card{background:#fff;border:1px solid #ebebeb;border-radius:12px;padding:20px;position:relative;}
+      .parceiro-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.08);}
+      .parceiro-avatar{width:44px;height:44px;border-radius:50%;background:#ffd600;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#111;flex-shrink:0;}
+      .badge-contrato{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;}
+    </style>
+
+    <script>
+    (function(){
+      var STORE_KEY = 'obo_parceiros';
+
+      function getParceiros(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)||'[]'); }catch(e){ return []; } }
+      function setParceiros(arr){ localStorage.setItem(STORE_KEY, JSON.stringify(arr)); }
+      function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+
+      function initials(nome){ return nome.split(' ').slice(0,2).map(function(w){return w[0];}).join('').toUpperCase(); }
+
+      function fmtValor(v){ return v ? 'R$ ' + parseFloat(v).toLocaleString('pt-BR',{minimumFractionDigits:2}) : '—'; }
+
+      function badgeContrato(v){
+        if(v==='sim') return '<span class="badge-contrato" style="background:#dcfce7;color:#166534;">Contrato ativo</span>';
+        if(v==='nao') return '<span class="badge-contrato" style="background:#fee2e2;color:#991b1b;">Sem contrato</span>';
+        return '<span class="badge-contrato" style="background:#fef9c3;color:#92400e;">Pendente</span>';
+      }
+
+      function renderLista(){
+        var parceiros = getParceiros();
+        var lista = document.getElementById('parceiros-lista');
+        var vazio = document.getElementById('parceiros-vazio');
+        if(!lista) return;
+        if(parceiros.length===0){ lista.innerHTML=''; vazio.style.display='block'; }
+        else { vazio.style.display='none'; }
+
+        var total = parceiros.length;
+        var comContrato = parceiros.filter(function(p){return p.contrato==='sim';}).length;
+        var totalValor = parceiros.reduce(function(s,p){return s+(parseFloat(p.valor)||0);},0);
+
+        var stTotal = document.getElementById('stat-total');
+        var stCont = document.getElementById('stat-contrato');
+        var stVal = document.getElementById('stat-valor');
+        if(stTotal) stTotal.textContent = total;
+        if(stCont) stCont.textContent = comContrato;
+        if(stVal) stVal.textContent = 'R$ '+totalValor.toLocaleString('pt-BR',{minimumFractionDigits:2});
+
+        lista.innerHTML = parceiros.map(function(p){
+          return '<div class="parceiro-card">' +
+            '<div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;">' +
+              '<div class="parceiro-avatar">'+initials(p.nome)+'</div>' +
+              '<div style="flex:1;min-width:0;">' +
+                '<div style="font-weight:700;font-size:14px;color:#111;">'+p.nome+'</div>' +
+                '<div style="font-size:12px;color:#888;margin-top:2px;">'+( p.funcao||'—' )+'</div>' +
+              '</div>' +
+              '<div style="display:flex;gap:6px;">' +
+                '<button onclick="editarParceiro(''+p.id+'')" style="padding:5px 8px;border:1px solid #eee;border-radius:6px;background:#fff;cursor:pointer;font-size:11px;color:#555;">Editar</button>' +
+                '<button onclick="removerParceiro(''+p.id+'')" style="padding:5px 8px;border:1px solid #fee2e2;border-radius:6px;background:#fff;cursor:pointer;font-size:11px;color:#ef4444;">Remover</button>' +
+              '</div>' +
+            '</div>' +
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;">' +
+              '<div><span style="color:#888;">E-mail: </span><span>'+( p.email||'—' )+'</span></div>' +
+              '<div><span style="color:#888;">Tel: </span><span>'+( p.telefone||'—' )+'</span></div>' +
+              '<div><span style="color:#888;">CPF: </span><span>'+( p.cpf||'—' )+'</span></div>' +
+              '<div><span style="color:#888;">CNPJ: </span><span>'+( p.cnpj||'—' )+'</span></div>' +
+              '<div><span style="color:#888;">Valor/mês: </span><span style="font-weight:600;color:#22c55e;">'+fmtValor(p.valor)+'</span></div>' +
+              '<div>'+badgeContrato(p.contrato)+'</div>' +
+              (p.clientes ? '<div style="grid-column:1/-1;"><span style="color:#888;">Clientes: </span><span>'+p.clientes+'</span></div>' : '') +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      window.abrirModalParceiro = function(){
+        document.getElementById('modal-titulo').textContent = 'Novo Parceiro';
+        document.getElementById('form-parceiro').reset();
+        document.getElementById('parceiro-id').value = '';
+        document.getElementById('modal-parceiro').style.display = 'flex';
+      };
+
+      window.fecharModalParceiro = function(){
+        document.getElementById('modal-parceiro').style.display = 'none';
+      };
+
+      window.salvarParceiro = function(e){
+        e.preventDefault();
+        var id = document.getElementById('parceiro-id').value || uid();
+        var parceiro = {
+          id: id,
+          nome: document.getElementById('p-nome').value.trim(),
+          funcao: document.getElementById('p-funcao').value.trim(),
+          email: document.getElementById('p-email').value.trim(),
+          telefone: document.getElementById('p-telefone').value.trim(),
+          cpf: document.getElementById('p-cpf').value.trim(),
+          cnpj: document.getElementById('p-cnpj').value.trim(),
+          razao: document.getElementById('p-razao').value.trim(),
+          endereco: document.getElementById('p-endereco').value.trim(),
+          valor: document.getElementById('p-valor').value,
+          contrato: document.getElementById('p-contrato').value,
+          clientes: document.getElementById('p-clientes').value.trim(),
+        };
+        var arr = getParceiros();
+        var idx = arr.findIndex(function(p){return p.id===id;});
+        if(idx>=0) arr[idx]=parceiro; else arr.push(parceiro);
+        setParceiros(arr);
+        fecharModalParceiro();
+        renderLista();
+      };
+
+      window.editarParceiro = function(id){
+        var p = getParceiros().find(function(x){return x.id===id;});
+        if(!p) return;
+        document.getElementById('modal-titulo').textContent = 'Editar Parceiro';
+        document.getElementById('parceiro-id').value = p.id;
+        document.getElementById('p-nome').value = p.nome||'';
+        document.getElementById('p-funcao').value = p.funcao||'';
+        document.getElementById('p-email').value = p.email||'';
+        document.getElementById('p-telefone').value = p.telefone||'';
+        document.getElementById('p-cpf').value = p.cpf||'';
+        document.getElementById('p-cnpj').value = p.cnpj||'';
+        document.getElementById('p-razao').value = p.razao||'';
+        document.getElementById('p-endereco').value = p.endereco||'';
+        document.getElementById('p-valor').value = p.valor||'';
+        document.getElementById('p-contrato').value = p.contrato||'sim';
+        document.getElementById('p-clientes').value = p.clientes||'';
+        document.getElementById('modal-parceiro').style.display = 'flex';
+      };
+
+      window.removerParceiro = function(id){
+        if(!confirm('Remover este parceiro?')) return;
+        var arr = getParceiros().filter(function(p){return p.id!==id;});
+        setParceiros(arr);
+        renderLista();
+      };
+
+      // Fechar modal clicando fora
+      document.getElementById('modal-parceiro').addEventListener('click', function(e){
+        if(e.target===this) fecharModalParceiro();
+      });
+
+      // Render ao carregar e ao navegar para a seção
+      document.querySelectorAll('.nav-item').forEach(function(item){
+        item.addEventListener('click', function(){
+          if(this.getAttribute('data-view')==='time') setTimeout(renderLista, 50);
+        });
+      });
+
+      renderLista();
+    })();
+    </script>
 </div><!-- /main -->
 
 <script>
