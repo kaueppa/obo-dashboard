@@ -30,7 +30,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .search{background:#F4F5F7;border:none;border-radius:8px;padding:7px 12px;font-size:11px;color:#888;width:195px;outline:none}
 .notif-wrap{position:relative}
 .notif-btn{background:none;border:none;cursor:pointer;padding:4px;display:flex}
-.notif-dot{position:absolute;top:0;right:0;width:16px;height:16px;border-radius:50%;background:#FF4444;color:#fff;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.notif-dot{position:absolute;top:0;right:0;width:16px;height:16px;border-radius:50%;background:#ef4444;color:#fff;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center}
 .date-chip{background:#F4F5F7;border-radius:6px;padding:5px 10px;font-size:11px;color:#666;font-weight:500;white-space:nowrap}
 .scroll{flex:1;overflow-y:auto;padding:16px 18px}
 .layout{display:flex;gap:16px}
@@ -50,25 +50,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .section-title{font-size:13px;font-weight:700;color:#111}
 .alerts{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 .alert{background:#fff;border-radius:10px;padding:11px 13px;box-shadow:0 1px 3px rgba(0,0,0,.06);border-left:3px solid}
-.alert.red{border-color:#EF4444}.alert.orange{border-color:#F97316}.alert.amber{border-color:#F59E0B}.alert.blue{border-color:#3B82F6}
+.alert.red{border-color:#EF4444}.alert.orange{border-color:#f59e0b}.alert.amber{border-color:#F59E0B}.alert.blue{border-color:#555555}
 .al-num{font-size:20px;font-weight:900}
-.alert.red .al-num{color:#EF4444}.alert.orange .al-num{color:#F97316}.alert.amber .al-num{color:#F59E0B}.alert.blue .al-num{color:#3B82F6}
+.alert.red .al-num{color:#EF4444}.alert.orange .al-num{color:#f59e0b}.alert.amber .al-num{color:#F59E0B}.alert.blue .al-num{color:#555555}
 .al-name{font-size:11.5px;font-weight:700;color:#111;margin-top:1px}
 .al-desc{font-size:10px;color:#999;margin-top:2px}
 .al-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
 .atag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px}
-.atag.red{background:#FEE2E2;color:#991B1B}.atag.orange{background:#FFEDD5;color:#9A3412}.atag.blue{background:#DBEAFE;color:#1E40AF}.atag.gray{background:#F3F4F6;color:#374151}
+.atag.red{background:#FEE2E2;color:#991B1B}.atag.orange{background:#fef9c3;color:#9A3412}.atag.blue{background:#f0f0f0;color:#333333}.atag.gray{background:#F3F4F6;color:#374151}
 .kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .kb-col{background:#F7F8FA;border-radius:10px;padding:10px}
 .kb-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .kb-title{font-size:11px;font-weight:700}
 .kb-badge{font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px}
-.kb-badge.y{background:#FEF9C3;color:#854D0E}.kb-badge.b{background:#DBEAFE;color:#1E40AF}.kb-badge.r{background:#FEE2E2;color:#991B1B}.kb-badge.g{background:#DCFCE7;color:#166534}
+.kb-badge.y{background:#FEF9C3;color:#92400e}.kb-badge.b{background:#f0f0f0;color:#333333}.kb-badge.r{background:#FEE2E2;color:#991B1B}.kb-badge.g{background:#DCFCE7;color:#166534}
 .kb-card{background:#fff;border-radius:8px;padding:8px 9px;margin-bottom:6px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
 .kb-card-ttl{font-size:11px;font-weight:600;color:#111;line-height:1.3}
 .kb-card-sub{font-size:10px;color:#888;margin-top:2px}
 .kb-tag{font-size:9px;font-weight:700;padding:2px 5px;border-radius:4px;display:inline-block;margin-top:4px}
-.kb-tag.at{background:#FEE2E2;color:#991B1B}.kb-tag.ag{background:#FEF9C3;color:#854D0E}.kb-tag.pe{background:#FFEDD5;color:#9A3412}.kb-tag.ok{background:#DCFCE7;color:#166534}
+.kb-tag.at{background:#FEE2E2;color:#991B1B}.kb-tag.ag{background:#FEF9C3;color:#92400e}.kb-tag.pe{background:#fef9c3;color:#9A3412}.kb-tag.ok{background:#DCFCE7;color:#166534}
 .tbl-wrap{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
 .tbl-top{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 8px}
 .tbl-title{font-size:13px;font-weight:700}
@@ -84,7 +84,7 @@ tbody tr:last-child td{border-bottom:none}
 .hs-bar{width:46px;height:4px;background:#EEE;border-radius:2px;overflow:hidden}
 .hs-fill{height:100%;border-radius:2px}
 .sbadge{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:12px}
-.sbadge.ex{background:#DCFCE7;color:#166534}.sbadge.bom{background:#DBEAFE;color:#1E40AF}.sbadge.at{background:#FEF9C3;color:#854D0E}.sbadge.ri{background:#FEE2E2;color:#991B1B}
+.sbadge.ex{background:#DCFCE7;color:#166534}.sbadge.bom{background:#f0f0f0;color:#333333}.sbadge.at{background:#FEF9C3;color:#92400e}.sbadge.ri{background:#FEE2E2;color:#991B1B}
 .panel{background:#fff;border-radius:12px;padding:13px 14px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .panel-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .panel-title{font-size:12px;font-weight:700;color:#111}
@@ -144,10 +144,10 @@ tbody tr:last-child td{border-bottom:none}
 .pipe-col-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .pipe-col-title{font-size:10px;font-weight:700;color:#555}
 .pipe-count{font-size:10px;font-weight:800;padding:1px 7px;border-radius:10px}
-.pipe-count.prospects{background:#EDE9FE;color:#5B21B6}
-.pipe-count.contato{background:#DBEAFE;color:#1E40AF}
-.pipe-count.proposta{background:#FEF9C3;color:#854D0E}
-.pipe-count.bolo{background:#FFEDD5;color:#9A3412}
+.pipe-count.prospects{background:#f0f0f0;color:#5B21B6}
+.pipe-count.contato{background:#f0f0f0;color:#333333}
+.pipe-count.proposta{background:#FEF9C3;color:#92400e}
+.pipe-count.bolo{background:#fef9c3;color:#9A3412}
 .pipe-count.perdidas{background:#FEE2E2;color:#991B1B}
 .pipe-card{background:#fff;border-radius:7px;padding:7px 9px;margin-bottom:5px;box-shadow:0 1px 2px rgba(0,0,0,.05);font-size:10.5px;font-weight:600;color:#111;line-height:1.3}
 .pipe-more{font-size:9px;color:#BBB;text-align:center;padding-top:4px;border-top:1px dashed #EEE;margin-top:4px}
@@ -252,18 +252,18 @@ tbody tr:last-child td{border-bottom:none}
         <div class="col-main">
           <div class="kpi-row">
             <div class="kpi">
-              <div class="kpi-icon" style="background:#FEF9C3"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#854D0E" stroke-width="1.5"/><path d="M10 6v8M7.5 8.5C7.5 7.67 8.17 7 9 7h2a1.5 1.5 0 010 3H9a1.5 1.5 0 000 3h2a1.5 1.5 0 000-3" stroke="#854D0E" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div class="kpi-icon" style="background:#FEF9C3"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#92400e" stroke-width="1.5"/><path d="M10 6v8M7.5 8.5C7.5 7.67 8.17 7 9 7h2a1.5 1.5 0 010 3H9a1.5 1.5 0 000 3h2a1.5 1.5 0 000-3" stroke="#92400e" stroke-width="1.5" stroke-linecap="round"/></svg></div>
               <div class="kpi-label">Receita do mês (competência)</div>
               <div class="kpi-val">R$ 52.015<sub>,29</sub></div>
               <div class="kpi-delta up">↑ 2,4% vs mai · jun ainda em andamento</div>
-              <div class="kpi-spark"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#EAB308" stop-opacity=".3"/><stop offset="100%" stop-color="#EAB308" stop-opacity="0"/></linearGradient></defs><path d="M0,23 L25,12 L50,5 L75,0 L100,5" fill="none" stroke="#EAB308" stroke-width="1.5"/><path d="M0,23 L25,12 L50,5 L75,0 L100,5 L100,30 L0,30 Z" fill="url(#g1)"/></svg></div>
+              <div class="kpi-spark"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f59e0b" stop-opacity=".3"/><stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/></linearGradient></defs><path d="M0,23 L25,12 L50,5 L75,0 L100,5" fill="none" stroke="#f59e0b" stroke-width="1.5"/><path d="M0,23 L25,12 L50,5 L75,0 L100,5 L100,30 L0,30 Z" fill="url(#g1)"/></svg></div>
             </div>
             <div class="kpi">
-              <div class="kpi-icon" style="background:#EDE9FE"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M3 17l4-8 4 4 3-5 3 3" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="kpi-icon" style="background:#f0f0f0"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M3 17l4-8 4 4 3-5 3 3" stroke="#555555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <div class="kpi-label">A receber em Jun</div>
               <div class="kpi-val">R$ 49.521<sub>,22</sub></div>
               <div class="kpi-delta nu">R$6.705,93 recebido · R$42.815,29 a vencer</div>
-              <div class="kpi-spark"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7C3AED" stop-opacity=".2"/><stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/></linearGradient></defs><path d="M0,27 L25,18 L50,10 L75,5 L100,8" fill="none" stroke="#7C3AED" stroke-width="1.5"/><path d="M0,27 L25,18 L50,10 L75,5 L100,8 L100,30 L0,30 Z" fill="url(#g2)"/></svg></div>
+              <div class="kpi-spark"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#555555" stop-opacity=".2"/><stop offset="100%" stop-color="#555555" stop-opacity="0"/></linearGradient></defs><path d="M0,27 L25,18 L50,10 L75,5 L100,8" fill="none" stroke="#555555" stroke-width="1.5"/><path d="M0,27 L25,18 L50,10 L75,5 L100,8 L100,30 L0,30 Z" fill="url(#g2)"/></svg></div>
             </div>
             <div class="kpi">
               <div class="kpi-icon" style="background:#FEF9C3"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M2 6h16v10a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM2 6l2-3h12l2 3" stroke="#92400E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 10v4M8 12h4" stroke="#92400E" stroke-width="1.5" stroke-linecap="round"/></svg></div>
@@ -273,11 +273,11 @@ tbody tr:last-child td{border-bottom:none}
               <div class="kpi-spark"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E" stop-opacity=".25"/><stop offset="100%" stop-color="#22C55E" stop-opacity="0"/></linearGradient></defs><path d="M0,30 L20,28 L40,12 L60,3 L80,3 L100,0" fill="none" stroke="#22C55E" stroke-width="1.5"/><path d="M0,30 L20,28 L40,12 L60,3 L80,3 L100,0 L100,30 L0,30 Z" fill="url(#g3)"/></svg></div>
             </div>
             <div class="kpi">
-              <div class="kpi-icon" style="background:#DBEAFE"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="7" cy="6" r="3" stroke="#1E40AF" stroke-width="1.5"/><path d="M2 16c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="#1E40AF" stroke-width="1.5" stroke-linecap="round"/><path d="M15 8v6M12 11h6" stroke="#1E40AF" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div class="kpi-icon" style="background:#f0f0f0"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="7" cy="6" r="3" stroke="#333333" stroke-width="1.5"/><path d="M2 16c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="#333333" stroke-width="1.5" stroke-linecap="round"/><path d="M15 8v6M12 11h6" stroke="#333333" stroke-width="1.5" stroke-linecap="round"/></svg></div>
               <div class="kpi-label">Clientes ativos</div>
               <div class="kpi-val">16</div>
               <div class="kpi-delta nu">+4 novos no pipeline · Eady encerra 22/6</div>
-              <div class="kpi-spark"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><defs><linearGradient id="g4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3B82F6" stop-opacity=".2"/><stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/></linearGradient></defs><path d="M0,22 L25,18 L50,14 L75,8 L100,5" fill="none" stroke="#3B82F6" stroke-width="1.5"/><path d="M0,22 L25,18 L50,14 L75,8 L100,5 L100,30 L0,30 Z" fill="url(#g4)"/></svg></div>
+              <div class="kpi-spark"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><defs><linearGradient id="g4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#555555" stop-opacity=".2"/><stop offset="100%" stop-color="#555555" stop-opacity="0"/></linearGradient></defs><path d="M0,22 L25,18 L50,14 L75,8 L100,5" fill="none" stroke="#555555" stroke-width="1.5"/><path d="M0,22 L25,18 L50,14 L75,8 L100,5 L100,30 L0,30 Z" fill="url(#g4)"/></svg></div>
             </div>
             <div class="kpi">
               <div class="kpi-icon" style="background:#FFE4E6"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 3l1.8 3.6L16 7.5l-3 2.92.7 4.12L10 12.6l-3.7 1.94.7-4.12L4 7.5l4.2-.9L10 3z" stroke="#9F1239" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
@@ -314,17 +314,17 @@ tbody tr:last-child td{border-bottom:none}
             <table>
               <thead><tr><th>Cliente</th><th>Ticket</th><th>Health Score</th><th>Status Op.</th><th>Status Mkt</th></tr></thead>
               <tbody>
-                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#E11D48">BC</div>Bem Comum</div></td><td>R$ 14.578</td><td><div class="hs-wrap"><span class="hs-num">92</span><div class="hs-bar"><div class="hs-fill" style="width:92%;background:#22C55E"></div></div></div></td><td><span class="sbadge ex">Excelente</span></td><td><span class="sbadge ex">Ativo</span></td></tr>
-                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#6B7280">XP</div>XPTO</div></td><td>R$ 4.500</td><td><div class="hs-wrap"><span class="hs-num">74</span><div class="hs-bar"><div class="hs-fill" style="width:74%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
-                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#7C3AED">SE</div>Seven Motors</div></td><td>R$ 3.722</td><td><div class="hs-wrap"><span class="hs-num">58</span><div class="hs-bar"><div class="hs-fill" style="width:58%;background:#F59E0B"></div></div></div></td><td><span class="sbadge ri">Risco</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
-                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#0F766E">AN</div>Antares</div></td><td>R$ 3.690</td><td><div class="hs-wrap"><span class="hs-num">80</span><div class="hs-bar"><div class="hs-fill" style="width:80%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge ex">Ativo</span></td></tr>
-                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#0891B2">BA</div>Bruno Ary</div></td><td>R$ 3.998</td><td><div class="hs-wrap"><span class="hs-num">76</span><div class="hs-bar"><div class="hs-fill" style="width:76%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
-                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#059669">EN</div>Ênio</div></td><td>R$ 3.498</td><td><div class="hs-wrap"><span class="hs-num">72</span><div class="hs-bar"><div class="hs-fill" style="width:72%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
-                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#A16207">BR</div>BR Docs</div></td><td>R$ 2.939</td><td><div class="hs-wrap"><span class="hs-num">74</span><div class="hs-bar"><div class="hs-fill" style="width:74%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
-                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#166534">FA</div>Fabsol</div></td><td>R$ 2.000</td><td><div class="hs-wrap"><span class="hs-num">82</span><div class="hs-bar"><div class="hs-fill" style="width:82%;background:#3B82F6"></div></div></div></td><td><span class="sbadge ex">Excelente</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
-                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#D97706">SV</div>S Vistorias</div></td><td>R$ 2.998</td><td><div class="hs-wrap"><span class="hs-num">71</span><div class="hs-bar"><div class="hs-fill" style="width:71%;background:#3B82F6"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
-                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#BE185D">EA</div>Eady</div></td><td>R$ 2.498</td><td><div class="hs-wrap"><span class="hs-num">62</span><div class="hs-bar"><div class="hs-fill" style="width:62%;background:#F59E0B"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge at">Atenção</span></td></tr>
-                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#2563EB">AL</div>Alplast</div></td><td>R$ 2.800</td><td><div class="hs-wrap"><span class="hs-num">70</span><div class="hs-bar"><div class="hs-fill" style="width:70%;background:#3B82F6"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#ef4444">BC</div>Bem Comum</div></td><td>R$ 14.578</td><td><div class="hs-wrap"><span class="hs-num">92</span><div class="hs-bar"><div class="hs-fill" style="width:92%;background:#22C55E"></div></div></div></td><td><span class="sbadge ex">Excelente</span></td><td><span class="sbadge ex">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#6B7280">XP</div>XPTO</div></td><td>R$ 4.500</td><td><div class="hs-wrap"><span class="hs-num">74</span><div class="hs-bar"><div class="hs-fill" style="width:74%;background:#555555"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#555555">SE</div>Seven Motors</div></td><td>R$ 3.722</td><td><div class="hs-wrap"><span class="hs-num">58</span><div class="hs-bar"><div class="hs-fill" style="width:58%;background:#F59E0B"></div></div></div></td><td><span class="sbadge ri">Risco</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#555555">AN</div>Antares</div></td><td>R$ 3.690</td><td><div class="hs-wrap"><span class="hs-num">80</span><div class="hs-bar"><div class="hs-fill" style="width:80%;background:#555555"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge ex">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#555555">BA</div>Bruno Ary</div></td><td>R$ 3.998</td><td><div class="hs-wrap"><span class="hs-num">76</span><div class="hs-bar"><div class="hs-fill" style="width:76%;background:#555555"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#22c55e">EN</div>Ênio</div></td><td>R$ 3.498</td><td><div class="hs-wrap"><span class="hs-num">72</span><div class="hs-bar"><div class="hs-fill" style="width:72%;background:#555555"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#92400e">BR</div>BR Docs</div></td><td>R$ 2.939</td><td><div class="hs-wrap"><span class="hs-num">74</span><div class="hs-bar"><div class="hs-fill" style="width:74%;background:#555555"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#166534">FA</div>Fabsol</div></td><td>R$ 2.000</td><td><div class="hs-wrap"><span class="hs-num">82</span><div class="hs-bar"><div class="hs-fill" style="width:82%;background:#555555"></div></div></div></td><td><span class="sbadge ex">Excelente</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#D97706">SV</div>S Vistorias</div></td><td>R$ 2.998</td><td><div class="hs-wrap"><span class="hs-num">71</span><div class="hs-bar"><div class="hs-fill" style="width:71%;background:#555555"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#555555">EA</div>Eady</div></td><td>R$ 2.498</td><td><div class="hs-wrap"><span class="hs-num">62</span><div class="hs-bar"><div class="hs-fill" style="width:62%;background:#F59E0B"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge at">Atenção</span></td></tr>
+                <tr><td><div class="cl-name"><div class="cl-dot" style="background:#444444">AL</div>Alplast</div></td><td>R$ 2.800</td><td><div class="hs-wrap"><span class="hs-num">70</span><div class="hs-bar"><div class="hs-fill" style="width:70%;background:#555555"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge bom">Ativo</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -342,14 +342,14 @@ tbody tr:last-child td{border-bottom:none}
             <div class="panel-hd"><span class="panel-title">Metas financeiras</span></div>
             <div class="meta-block"><div class="meta-top"><span class="meta-name">Receita mensal</span><span class="meta-pct">83%</span></div><div class="meta-track"><div class="meta-fill" style="width:83%;background:#22C55E"></div></div><div class="meta-target">Meta: R$ 65.000 · R$ 54.417</div></div>
             <div class="meta-block"><div class="meta-top"><span class="meta-name">Resultado líquido</span><span class="meta-pct">47%</span></div><div class="meta-track"><div class="meta-fill" style="width:47%;background:#F59E0B"></div></div><div class="meta-target">Meta: R$ 6.500 · Melhor: R$ 3.073 (abr)</div></div>
-            <div class="meta-block"><div class="meta-top"><span class="meta-name">Clientes ativos</span><span class="meta-pct">85%</span></div><div class="meta-track"><div class="meta-fill" style="width:85%;background:#3B82F6"></div></div><div class="meta-target">Meta: 20 clientes · Atual: 17</div></div>
+            <div class="meta-block"><div class="meta-top"><span class="meta-name">Clientes ativos</span><span class="meta-pct">85%</span></div><div class="meta-track"><div class="meta-fill" style="width:85%;background:#555555"></div></div><div class="meta-target">Meta: 20 clientes · Atual: 17</div></div>
           </div>
           <div class="panel">
             <div class="panel-hd"><span class="panel-title">Insights da semana</span></div>
             <div class="insight"><div class="ins-icon" style="background:#FEF9C3">⚠️</div><span class="ins-text">Banco Inter PJ voltou ao positivo em 15/06 (saldo R$143,32 após Pix de R$3.500 da Obo Studio), mas margem é crítica. Conta Azul IP separada tem R$16.678,24.</span></div>
             <div class="insight"><div class="ins-icon" style="background:#FEE2E2">🔁</div><span class="ins-text">A conta caiu no cheque especial quase todo mês em 2026, pagando juros/IOF — custo financeiro recorrente evitável.</span></div>
             <div class="insight"><div class="ins-icon" style="background:#FEF9C3">💸</div><span class="ins-text">Antecipação de lucros do Kauê (R$10.000) está vencida desde 07/06 e ainda em aberto no Conta Azul.</span></div>
-            <div class="insight"><div class="ins-icon" style="background:#DBEAFE">📊</div><span class="ins-text">Jun/26 já soma R$52.015 em receita (competência) e resultado parcial de +R$3.837 — recuperação após abril negativo.</span></div>
+            <div class="insight"><div class="ins-icon" style="background:#f0f0f0">📊</div><span class="ins-text">Jun/26 já soma R$52.015 em receita (competência) e resultado parcial de +R$3.837 — recuperação após abril negativo.</span></div>
             <div class="insight"><div class="ins-icon" style="background:#FEE2E2">⚠️</div><span class="ins-text">EXPEDITO sem entrega há +15 dias e com site em atraso — risco de churn.</span></div>
             <div class="insight"><div class="ins-icon" style="background:#DCFCE7">⭐</div><span class="ins-text">ASSOCIACAO BEM COMUM segue como maior cliente recorrente (~R$14,6k/mês) — forte concentração de receita.</span></div>
           </div>
@@ -366,16 +366,16 @@ tbody tr:last-child td{border-bottom:none}
             <div class="cap-labels"><span>78% utilizado</span><span>Ideal: até 85%</span></div>
             <div style="margin-top:10px;font-size:10px;color:#999;margin-bottom:6px">Time ativo em jun/26</div>
             <div style="display:flex;gap:4px;flex-wrap:wrap">
-              <div style="width:22px;height:22px;border-radius:50%;background:#7C3AED;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Sarah">SA</div>
-              <div style="width:22px;height:22px;border-radius:50%;background:#059669;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Carol">CA</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#555555;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Sarah">SA</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#22c55e;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Carol">CA</div>
               <div style="width:22px;height:22px;border-radius:50%;background:#DC2626;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Rodrigo">RO</div>
-              <div style="width:22px;height:22px;border-radius:50%;background:#2563EB;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Lucas">LC</div>
-              <div style="width:22px;height:22px;border-radius:50%;background:#0891B2;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Gabi">GA</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#444444;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Lucas">LC</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#555555;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Gabi">GA</div>
               <div style="width:22px;height:22px;border-radius:50%;background:#D97706;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Everson">EV</div>
-              <div style="width:22px;height:22px;border-radius:50%;background:#9333EA;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Jessyca">JE</div>
-              <div style="width:22px;height:22px;border-radius:50%;background:#BE185D;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Tabatha">TA</div>
-              <div style="width:22px;height:22px;border-radius:50%;background:#0F766E;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Cecilia">CE</div>
-              <div style="width:22px;height:22px;border-radius:50%;background:#A16207;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Ana Luísa">AL</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#555555;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Jessyca">JE</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#555555;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Tabatha">TA</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#555555;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Cecilia">CE</div>
+              <div style="width:22px;height:22px;border-radius:50%;background:#92400e;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Ana Luísa">AL</div>
               <div style="width:22px;height:22px;border-radius:50%;background:#6B7280;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff" title="Juliana">JU</div>
             </div>
           </div>
@@ -486,7 +486,7 @@ tbody tr:last-child td{border-bottom:none}
       <div class="panel">
         <div class="panel-hd"><span class="panel-title">Leitura do pipeline</span></div>
         <div class="insight"><div class="ins-icon" style="background:#FEF9C3">📌</div><span class="ins-text">59 leads em "bolo" — carteira grande mas sem status claro de avanço. Priorizar follow-up nos mais quentes.</span></div>
-        <div class="insight"><div class="ins-icon" style="background:#DBEAFE">📄</div><span class="ins-text">Apenas 2 propostas enviadas no momento: Grupo Viper e Aquila Card. Foco em avançar esses dois para fechamento.</span></div>
+        <div class="insight"><div class="ins-icon" style="background:#f0f0f0">📄</div><span class="ins-text">Apenas 2 propostas enviadas no momento: Grupo Viper e Aquila Card. Foco em avançar esses dois para fechamento.</span></div>
         <div class="insight"><div class="ins-icon" style="background:#DCFCE7">🎯</div><span class="ins-text">Meta de R$ 9.000/mês para Ricardo. Fechar 1 cliente de ticket médio (R$ 4.500) já cobre 50% da meta.</span></div>
         <div class="insight"><div class="ins-icon" style="background:#FEE2E2">⚠️</div><span class="ins-text">31 perdidas acumuladas — vale revisar padrão: segmento, ticket, canal de origem.</span></div>
       </div>
@@ -507,7 +507,7 @@ tbody tr:last-child td{border-bottom:none}
         <div class="meta-block"><div class="meta-top"><span class="meta-name">Receita mensal</span><span class="meta-pct">80%</span></div><div class="meta-track"><div class="meta-fill" style="width:80%;background:#22C55E"></div></div><div class="meta-target">Meta: R$ 65.000 · Atual: R$ 52.015 (parcial)</div></div>
         <div class="meta-block"><div class="meta-top"><span class="meta-name">Resultado líquido</span><span class="meta-pct">59%</span></div><div class="meta-track"><div class="meta-fill" style="width:59%;background:#F59E0B"></div></div><div class="meta-target">Meta: R$ 6.500 · Atual: R$ 3.837 (parcial)</div></div>
         <div class="meta-block"><div class="meta-top"><span class="meta-name">Folha vs receita</span><span class="meta-pct">47%</span></div><div class="meta-track"><div class="meta-fill" style="width:47%;background:#22C55E"></div></div><div class="meta-target">Ideal: abaixo de 45% · Atual: 47% (R$24.454 / R$52.015)</div></div>
-        <div class="meta-block"><div class="meta-top"><span class="meta-name">Clientes ativos</span><span class="meta-pct">80%</span></div><div class="meta-track"><div class="meta-fill" style="width:80%;background:#3B82F6"></div></div><div class="meta-target">Meta: 20 clientes · Atual: 16</div></div>
+        <div class="meta-block"><div class="meta-top"><span class="meta-name">Clientes ativos</span><span class="meta-pct">80%</span></div><div class="meta-track"><div class="meta-fill" style="width:80%;background:#555555"></div></div><div class="meta-target">Meta: 20 clientes · Atual: 16</div></div>
       </div>
       <div class="panel">
         <div class="panel-hd"><span class="panel-title">Análise — abril/26 a junho/26</span></div>
@@ -516,7 +516,7 @@ tbody tr:last-child td{border-bottom:none}
         <div class="insight"><div class="ins-icon" style="background:#DCFCE7">⭐</div><span class="ins-text">Maio (+R$3.508) e Junho (+R$3.837 parcial) recuperaram e fecharam no positivo.</span></div>
         <div class="insight"><div class="ins-icon" style="background:#DCFCE7">✅</div><span class="ins-text">Folha caiu para 47% da receita em jun (era 52%) — quase dentro do ideal de 45%.</span></div>
         <div class="insight"><div class="ins-icon" style="background:#FEF9C3">💸</div><span class="ins-text">Antecipação de lucros do Kauê (R$10.000) está vencida desde 07/06 e segue em aberto — pesa no caixa.</span></div>
-        <div class="insight"><div class="ins-icon" style="background:#DBEAFE">📊</div><span class="ins-text">Para atingir a meta de R$65k em jun, faltam R$12.985 — mês ainda em andamento.</span></div>
+        <div class="insight"><div class="ins-icon" style="background:#f0f0f0">📊</div><span class="ins-text">Para atingir a meta de R$65k em jun, faltam R$12.985 — mês ainda em andamento.</span></div>
       </div>
 
       <!-- PAINEL RECEITAS PREVISTAS vs REALIZADAS -->
@@ -653,15 +653,15 @@ tbody tr:last-child td{border-bottom:none}
         <div class="panel-hd"><span class="panel-title">Recebido em Jun/26 — por cliente</span><span style="font-size:10px;color:#22C55E;font-weight:700">R$ 15.254,22 recebidos · Conta Azul IP até 16/06</span></div>
         <div style="margin-bottom:8px">
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#0891B2"></div><span style="font-size:12px">Bruno Ary (Venda 128)</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#555555"></div><span style="font-size:12px">Bruno Ary (Venda 128)</span></div>
             <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 3.997,81</span><span style="font-size:10px;color:#999;margin-left:6px">05/06</span></div>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#0F766E"></div><span style="font-size:12px">Colégio Antares (Venda 126)</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#555555"></div><span style="font-size:12px">Colégio Antares (Venda 126)</span></div>
             <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 3.689,88</span><span style="font-size:10px;color:#999;margin-left:6px">15/06</span></div>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#7C3AED"></div><span style="font-size:12px">Seven Motors (Venda 129)</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#555555"></div><span style="font-size:12px">Seven Motors (Venda 129)</span></div>
             <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 3.719,60</span><span style="font-size:10px;color:#999;margin-left:6px">16/06</span></div>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
@@ -669,15 +669,15 @@ tbody tr:last-child td{border-bottom:none}
             <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 2.010,31</span><span style="font-size:10px;color:#999;margin-left:6px">10/06</span></div>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#2563EB"></div><span style="font-size:12px">A L F Felipe (1/4)</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#444444"></div><span style="font-size:12px">A L F Felipe (1/4)</span></div>
             <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 697,81</span><span style="font-size:10px;color:#999;margin-left:6px">05/06</span></div>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#2563EB"></div><span style="font-size:12px">A L F Felipe (2/4)</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#444444"></div><span style="font-size:12px">A L F Felipe (2/4)</span></div>
             <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 697,81</span><span style="font-size:10px;color:#999;margin-left:6px">12/06</span></div>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#A16207"></div><span style="font-size:12px">BR Docs (diferença)</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#92400e"></div><span style="font-size:12px">BR Docs (diferença)</span></div>
             <div style="text-align:right"><span style="font-size:12px;font-weight:700;color:#22C55E">R$ 441,80</span><span style="font-size:10px;color:#999;margin-left:6px">10/06</span></div>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #EBEBEB;margin-top:4px">
@@ -690,43 +690,43 @@ tbody tr:last-child td{border-bottom:none}
 
       <!-- PAINEL EM ABERTO / ATRASADO -->
       <div class="panel" style="margin-bottom:14px">
-        <div class="panel-hd"><span class="panel-title">A receber — Jun/26</span><span style="font-size:10px;color:#3B82F6;font-weight:700">R$ 34.701,43 a vencer · 0 vencidos · até 16/06</span></div>
+        <div class="panel-hd"><span class="panel-title">A receber — Jun/26</span><span style="font-size:10px;color:#555555;font-weight:700">R$ 34.701,43 a vencer · 0 vencidos · até 16/06</span></div>
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
             <div>
-              <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#E11D48"></div><span style="font-size:12px;font-weight:600">Bem Comum</span></div>
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#ef4444"></div><span style="font-size:12px;font-weight:600">Bem Comum</span></div>
               <div style="font-size:10px;color:#999;margin-top:1px;margin-left:16px">Venc. 30/06/2026 · mensalidade jun</div>
             </div>
-            <span style="font-size:12px;font-weight:700;color:#3B82F6">R$ 14.578,00</span>
+            <span style="font-size:12px;font-weight:700;color:#555555">R$ 14.578,00</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
             <div>
-              <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#A16207"></div><span style="font-size:12px;font-weight:600">BR Docs</span></div>
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#92400e"></div><span style="font-size:12px;font-weight:600">BR Docs</span></div>
               <div style="font-size:10px;color:#999;margin-top:1px;margin-left:16px">Venc. 22/06/2026</div>
             </div>
-            <span style="font-size:12px;font-weight:700;color:#3B82F6">R$ 4.001,25</span>
+            <span style="font-size:12px;font-weight:700;color:#555555">R$ 4.001,25</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
             <div>
-              <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#0F766E"></div><span style="font-size:12px;font-weight:600">Colégio Antares</span></div>
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#555555"></div><span style="font-size:12px;font-weight:600">Colégio Antares</span></div>
               <div style="font-size:10px;color:#999;margin-top:1px;margin-left:16px">Venc. 19/06/2026</div>
             </div>
-            <span style="font-size:12px;font-weight:700;color:#3B82F6">R$ 3.722,18</span>
+            <span style="font-size:12px;font-weight:700;color:#555555">R$ 3.722,18</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F5F5F5">
             <div>
-              <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#059669"></div><span style="font-size:12px;font-weight:600">Ênio</span></div>
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#22c55e"></div><span style="font-size:12px;font-weight:600">Ênio</span></div>
               <div style="font-size:10px;color:#999;margin-top:1px;margin-left:16px">Venc. 20/06/2026</div>
             </div>
-            <span style="font-size:12px;font-weight:700;color:#3B82F6">R$ 3.500,00</span>
+            <span style="font-size:12px;font-weight:700;color:#555555">R$ 3.500,00</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #EBEBEB">
             <span style="font-size:11px;color:#999">+ 5 itens (Eady, Fabsol, S Vistorias, A L F Felipe 3/4 e 4/4, BRDOCS 22/06)</span>
-            <span style="font-size:12px;font-weight:700;color:#3B82F6">R$ 12.900,00</span>
+            <span style="font-size:12px;font-weight:700;color:#555555">R$ 12.900,00</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0 2px">
             <span style="font-size:11px;font-weight:700;color:#111">Total a receber</span>
-            <span style="font-size:14px;font-weight:900;color:#3B82F6">R$ 34.701,43</span>
+            <span style="font-size:14px;font-weight:900;color:#555555">R$ 34.701,43</span>
           </div>
           <div style="font-size:10px;color:#22C55E;margin-top:4px">✓ Seven Motors, Colégio Antares (15/06) e A L F Felipe (2/4) confirmados pagos no extrato Conta Azul IP.</div>
         </div>
@@ -794,17 +794,17 @@ tbody tr:last-child td{border-bottom:none}
         <table>
           <thead><tr><th>Cliente</th><th>Ticket</th><th>Health Score</th><th>Status Op.</th><th>Status Mkt</th><th>Obs.</th></tr></thead>
           <tbody>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#E11D48">BC</div>Bem Comum</div></td><td>R$ 14.578</td><td><div class="hs-wrap"><span class="hs-num">92</span><div class="hs-bar"><div class="hs-fill" style="width:92%;background:#22C55E"></div></div></div></td><td><span class="sbadge ex">Excelente</span></td><td><span class="sbadge ex">Ativo</span></td><td style="font-size:10px;color:#888">Âncora · 30% receita</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#6B7280">XP</div>XPTO</div></td><td>R$ 4.500</td><td><div class="hs-wrap"><span class="hs-num">74</span><div class="hs-bar"><div class="hs-fill" style="width:74%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">3 meses adiant. · renovação set</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#7C3AED">SE</div>Seven Motors</div></td><td>R$ 3.722</td><td><div class="hs-wrap"><span class="hs-num">58</span><div class="hs-bar"><div class="hs-fill" style="width:58%;background:#F59E0B"></div></div></div></td><td><span class="sbadge ri">Risco</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">Sem entrega 15d · mai pagou 2x</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#0F766E">AN</div>Antares</div></td><td>R$ 3.690</td><td><div class="hs-wrap"><span class="hs-num">80</span><div class="hs-bar"><div class="hs-fill" style="width:80%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge ex">Ativo</span></td><td style="font-size:10px;color:#888">Fixo R$3.690 + extras captação</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#0891B2">BA</div>Bruno Ary</div></td><td>R$ 3.998</td><td><div class="hs-wrap"><span class="hs-num">76</span><div class="hs-bar"><div class="hs-fill" style="width:76%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">1 mês registrado</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#059669">EN</div>Ênio</div></td><td>R$ 3.498</td><td><div class="hs-wrap"><span class="hs-num">72</span><div class="hs-bar"><div class="hs-fill" style="width:72%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">-</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#A16207">BR</div>BR Docs</div></td><td>R$ 2.939</td><td><div class="hs-wrap"><span class="hs-num">74</span><div class="hs-bar"><div class="hs-fill" style="width:74%;background:#3B82F6"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">-</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#166534">FA</div>Fabsol</div></td><td>R$ 2.000</td><td><div class="hs-wrap"><span class="hs-num">82</span><div class="hs-bar"><div class="hs-fill" style="width:82%;background:#3B82F6"></div></div></div></td><td><span class="sbadge ex">Excelente</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">+entregas mês</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#D97706">SV</div>S Vistorias</div></td><td>R$ 2.998</td><td><div class="hs-wrap"><span class="hs-num">71</span><div class="hs-bar"><div class="hs-fill" style="width:71%;background:#3B82F6"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">-</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#BE185D">EA</div>Eady</div></td><td>R$ 2.498</td><td><div class="hs-wrap"><span class="hs-num">62</span><div class="hs-bar"><div class="hs-fill" style="width:62%;background:#F59E0B"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge at">Atenção</span></td><td style="font-size:10px;color:#888">Encerra 22/6</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#2563EB">AL</div>Alplast</div></td><td>R$ 2.800</td><td><div class="hs-wrap"><span class="hs-num">70</span><div class="hs-bar"><div class="hs-fill" style="width:70%;background:#3B82F6"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">4x sem. · 1 mês em aberto</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#ef4444">BC</div>Bem Comum</div></td><td>R$ 14.578</td><td><div class="hs-wrap"><span class="hs-num">92</span><div class="hs-bar"><div class="hs-fill" style="width:92%;background:#22C55E"></div></div></div></td><td><span class="sbadge ex">Excelente</span></td><td><span class="sbadge ex">Ativo</span></td><td style="font-size:10px;color:#888">Âncora · 30% receita</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#6B7280">XP</div>XPTO</div></td><td>R$ 4.500</td><td><div class="hs-wrap"><span class="hs-num">74</span><div class="hs-bar"><div class="hs-fill" style="width:74%;background:#555555"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">3 meses adiant. · renovação set</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#555555">SE</div>Seven Motors</div></td><td>R$ 3.722</td><td><div class="hs-wrap"><span class="hs-num">58</span><div class="hs-bar"><div class="hs-fill" style="width:58%;background:#F59E0B"></div></div></div></td><td><span class="sbadge ri">Risco</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">Sem entrega 15d · mai pagou 2x</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#555555">AN</div>Antares</div></td><td>R$ 3.690</td><td><div class="hs-wrap"><span class="hs-num">80</span><div class="hs-bar"><div class="hs-fill" style="width:80%;background:#555555"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge ex">Ativo</span></td><td style="font-size:10px;color:#888">Fixo R$3.690 + extras captação</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#555555">BA</div>Bruno Ary</div></td><td>R$ 3.998</td><td><div class="hs-wrap"><span class="hs-num">76</span><div class="hs-bar"><div class="hs-fill" style="width:76%;background:#555555"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">1 mês registrado</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#22c55e">EN</div>Ênio</div></td><td>R$ 3.498</td><td><div class="hs-wrap"><span class="hs-num">72</span><div class="hs-bar"><div class="hs-fill" style="width:72%;background:#555555"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">-</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#92400e">BR</div>BR Docs</div></td><td>R$ 2.939</td><td><div class="hs-wrap"><span class="hs-num">74</span><div class="hs-bar"><div class="hs-fill" style="width:74%;background:#555555"></div></div></div></td><td><span class="sbadge bom">Bom</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">-</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#166534">FA</div>Fabsol</div></td><td>R$ 2.000</td><td><div class="hs-wrap"><span class="hs-num">82</span><div class="hs-bar"><div class="hs-fill" style="width:82%;background:#555555"></div></div></div></td><td><span class="sbadge ex">Excelente</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">+entregas mês</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#D97706">SV</div>S Vistorias</div></td><td>R$ 2.998</td><td><div class="hs-wrap"><span class="hs-num">71</span><div class="hs-bar"><div class="hs-fill" style="width:71%;background:#555555"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">-</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#555555">EA</div>Eady</div></td><td>R$ 2.498</td><td><div class="hs-wrap"><span class="hs-num">62</span><div class="hs-bar"><div class="hs-fill" style="width:62%;background:#F59E0B"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge at">Atenção</span></td><td style="font-size:10px;color:#888">Encerra 22/6</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#444444">AL</div>Alplast</div></td><td>R$ 2.800</td><td><div class="hs-wrap"><span class="hs-num">70</span><div class="hs-bar"><div class="hs-fill" style="width:70%;background:#555555"></div></div></div></td><td><span class="sbadge at">Atenção</span></td><td><span class="sbadge bom">Ativo</span></td><td style="font-size:10px;color:#888">4x sem. · 1 mês em aberto</td></tr>
           </tbody>
         </table>
       </div>
@@ -820,15 +820,15 @@ tbody tr:last-child td{border-bottom:none}
         <table>
           <thead><tr><th>Cliente</th><th>Visualizações IG</th><th>Alcance IG</th><th>Visitas ao perfil</th><th>Obs.</th></tr></thead>
           <tbody>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#0F766E">AN</div>Antares</div></td><td>655.370</td><td>421.234</td><td>12.243</td><td style="font-size:10px;color:#888">Maior alcance · forte mídia paga (R$189k de alcance pago)</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#7C3AED">SE</div>Seven Motors</div></td><td>187.511</td><td>63.265</td><td>3.714</td><td style="font-size:10px;color:#888">Cliente em risco operacional, mas mídia performando</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#A16207">BR</div>BR Docs</div></td><td>134.093</td><td>114.306</td><td>772</td><td style="font-size:10px;color:#888">Alcance pago alto (Meta Ads CPC R$1,00)</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#555555">AN</div>Antares</div></td><td>655.370</td><td>421.234</td><td>12.243</td><td style="font-size:10px;color:#888">Maior alcance · forte mídia paga (R$189k de alcance pago)</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#555555">SE</div>Seven Motors</div></td><td>187.511</td><td>63.265</td><td>3.714</td><td style="font-size:10px;color:#888">Cliente em risco operacional, mas mídia performando</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#92400e">BR</div>BR Docs</div></td><td>134.093</td><td>114.306</td><td>772</td><td style="font-size:10px;color:#888">Alcance pago alto (Meta Ads CPC R$1,00)</td></tr>
             <tr><td><div class="cl-name"><div class="cl-dot" style="background:#6B7280">XP</div>XPTO</div></td><td>132.582</td><td>64.523</td><td>610</td><td style="font-size:10px;color:#888">Alcance quase 100% orgânico</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#E11D48">BC</div>Bem Comum</div></td><td>92.747</td><td>28.273</td><td>1.034</td><td style="font-size:10px;color:#888">Maior cliente em receita · alcance só orgânico</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#2563EB">AL</div>Alplast</div></td><td>44.814</td><td>14.070</td><td>2.347</td><td style="font-size:10px;color:#888">Maior auxa de visitas ao perfil vs alcance</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#9333EA">CA</div>C&amp;A Escolas</div></td><td>27.497</td><td>18.443</td><td>1.149</td><td style="font-size:10px;color:#888">Cliente novo detectado no Reportei, fora da lista de ativos</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#BE185D">EA</div>Eady</div></td><td>17.352</td><td>13.944</td><td>190</td><td style="font-size:10px;color:#888">Contrato encerra 22/6</td></tr>
-            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#0891B2">BA</div>Bruno Ary</div></td><td>16.508</td><td>4.454</td><td>612</td><td style="font-size:10px;color:#888">-</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#ef4444">BC</div>Bem Comum</div></td><td>92.747</td><td>28.273</td><td>1.034</td><td style="font-size:10px;color:#888">Maior cliente em receita · alcance só orgânico</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#444444">AL</div>Alplast</div></td><td>44.814</td><td>14.070</td><td>2.347</td><td style="font-size:10px;color:#888">Maior auxa de visitas ao perfil vs alcance</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#555555">CA</div>C&amp;A Escolas</div></td><td>27.497</td><td>18.443</td><td>1.149</td><td style="font-size:10px;color:#888">Cliente novo detectado no Reportei, fora da lista de ativos</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#555555">EA</div>Eady</div></td><td>17.352</td><td>13.944</td><td>190</td><td style="font-size:10px;color:#888">Contrato encerra 22/6</td></tr>
+            <tr><td><div class="cl-name"><div class="cl-dot" style="background:#555555">BA</div>Bruno Ary</div></td><td>16.508</td><td>4.454</td><td>612</td><td style="font-size:10px;color:#888">-</td></tr>
             <tr><td><div class="cl-name"><div class="cl-dot" style="background:#D97706">SV</div>S Vistorias</div></td><td>7.905</td><td>4.512</td><td>361</td><td style="font-size:10px;color:#888">Google Ads ativo (171 cliques, 4 conversões)</td></tr>
             <tr><td><div class="cl-name"><div class="cl-dot" style="background:#166534">FA</div>Fabsol</div></td><td>1.041</td><td>530</td><td>42</td><td style="font-size:10px;color:#888">Volume baixo no período</td></tr>
           </tbody>
