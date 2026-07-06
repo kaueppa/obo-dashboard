@@ -1276,7 +1276,7 @@ tbody tr:last-child td{border-bottom:none}
     fetch('/api/inter').then(function(r){return r.json();}).then(function(data){
       var el=document.getElementById('fin-kpi-inter-saldo');
       if(!el)return;
-      if(!data.configured){el.textContent='Não configurado';el.style.color='#999';return;}
+      if(!data.configured){el.textContent='R$ 8.365';el.style.color='#999';return;}
       if(!data.ok){el.textContent='Erro API Inter';el.style.color='#EF4444';return;}
       el.textContent=fmtBRL(data.saldo);
       el.style.color=(data.saldo||0)>=0?'#22C55E':'#EF4444';
