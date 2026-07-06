@@ -195,7 +195,7 @@ tbody tr:last-child td{border-bottom:none}
     Aprovações
     <span class="nav-badge" id="nav-badge-aprovacoes">4</span>
   </a>
-  <a class="nav-item" href="#" data-view="dashboard">
+  <a class="nav-item" href="#" data-view="calendario">
     <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 3V2M11 3V2M2 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     Calendário
   </a>
@@ -1101,6 +1101,72 @@ tbody tr:last-child td{border-bottom:none}
       });
 
       renderLista();
+    })();
+    </script>
+
+    <!-- ══════════════════════════════════
+         VIEW: CALENDÁRIO
+    ══════════════════════════════════ -->
+    <div class="view" id="view-calendario">
+      <div class="section-hd" style="margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <h2 class="section-title">Calendário</h2>
+          <p style="color:#888;font-size:13px;margin-top:4px;">Próximos 30 dias — contato@ e oi@obostudio.com.br</p>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="cal-filter active" data-filter="all">Todos</button>
+          <button class="cal-filter" data-filter="today">Hoje</button>
+          <button class="cal-filter" data-filter="week">Esta semana</button>
+          <button onclick="carregarCalendario()" style="padding:8px 14px;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer;font-size:12px;color:#555;">↻ Atualizar</button>
+        </div>
+      </div>
+      <div id="cal-loading" style="text-align:center;padding:60px 20px;color:#888;">
+        <div style="width:32px;height:32px;border:3px solid #eee;border-top-color:#ffd600;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px;"></div>
+        <p style="font-size:13px;">Carregando agenda...</p>
+      </div>
+      <div id="cal-no-creds" style="display:none;text-align:center;padding:60px 20px;">
+        <svg width="48" height="48" fill="none" stroke="#ddd" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:12px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <p style="font-weight:700;color:#555;margin-bottom:4px;">Credenciais não configuradas</p>
+        <p style="font-size:13px;color:#888;max-width:380px;margin:0 auto;">Configure GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET e GOOGLE_REFRESH_TOKEN nas variáveis do Vercel.</p>
+      </div>
+      <div id="cal-error" style="display:none;text-align:center;padding:40px 20px;background:#fff5f5;border:1px solid #fecaca;border-radius:12px;color:#dc2626;">
+        <p style="font-weight:700;margin-bottom:4px;">Erro ao carregar agenda</p>
+        <p id="cal-error-msg" style="font-size:13px;"></p>
+      </div>
+      <div id="cal-lista" style="display:none;"></div>
+      <div id="cal-vazio" style="display:none;text-align:center;padding:60px 20px;color:#888;">
+        <p style="font-weight:700;color:#555;">Nenhum evento nos próximos 30 dias</p>
+      </div>
+    </div>
+    <style>
+      .cal-filter{padding:7px 14px;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer;font-size:12px;color:#555;font-weight:500;}
+      .cal-filter.active{background:#ffd600;border-color:#ffd600;color:#111;font-weight:700;}
+      .cal-day-header{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;padding:20px 0 8px;border-bottom:1px solid #f0f0f0;margin-bottom:8px;}
+      .cal-day-header.today-hd{color:#111;}
+      .cal-event{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:10px;margin-bottom:6px;background:#fff;border:1px solid #ebebeb;cursor:pointer;transition:box-shadow .15s;}
+      .cal-event:hover{box-shadow:0 2px 10px rgba(0,0,0,.07);}
+      .cal-event.ev-today{border-left:3px solid #ffd600;}
+      .cal-time{font-size:11px;color:#888;min-width:56px;padding-top:2px;font-weight:500;}
+      .cal-title{font-size:14px;font-weight:600;color:#111;}
+      .cal-location{font-size:12px;color:#888;margin-top:2px;}
+      .cal-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;margin-left:8px;background:#f5f5f5;color:#888;}
+    </style>
+    <script>
+    (function(){
+      var _calEvents=[];var _calFilter='all';
+      function showOnlyCal(id){['cal-loading','cal-no-creds','cal-error','cal-lista','cal-vazio'].forEach(function(x){var e=document.getElementById(x);if(e)e.style.display='none';});var t=document.getElementById(id);if(t)t.style.display='';}
+      function calFmtTime(ev){if(ev.allDay)return'Dia todo';var d=new Date(ev.start.dateTime||ev.start.date);return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
+      function calFmtDay(ds){var d=new Date(ds+'T12:00:00');var t=new Date().toISOString().slice(0,10);var tm=new Date(Date.now()+86400000).toISOString().slice(0,10);if(ds===t)return'Hoje · '+d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});if(ds===tm)return'Amanhã · '+d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});return d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});}
+      function calFilter(evs){var t=new Date().toISOString().slice(0,10);if(_calFilter==='today')return evs.filter(function(e){return(e.start.date||e.start.dateTime||'').slice(0,10)===t;});if(_calFilter==='week'){var w=new Date(Date.now()+7*86400000).toISOString().slice(0,10);return evs.filter(function(e){var d=(e.start.date||e.start.dateTime||'').slice(0,10);return d>=t&&d<=w;});}return evs;}
+      function calRender(evs){var filtered=calFilter(evs);if(!filtered.length){showOnlyCal('cal-vazio');return;}var groups={};filtered.forEach(function(e){var d=(e.start.date||e.start.dateTime||'').slice(0,10);if(!groups[d])groups[d]=[];groups[d].push(e);});var today=new Date().toISOString().slice(0,10);var html='';Object.keys(groups).sort().forEach(function(day){var isT=day===today;html+='<div class="cal-day-header'+(isT?' today-hd':'')+'">'+calFmtDay(day)+'</div>';groups[day].forEach(function(e){var lbl=e.calendar!=='primary'?'oi@':'contato@';html+='<div class="cal-event'+(isT?' ev-today':'')+'" onclick="window.open(''+(e.link||'')+"','_blank')">"+
+        '<div class="cal-time">'+calFmtTime(e)+'</div>'+
+        '<div style="flex:1;min-width:0;">'+
+          '<div class="cal-title">'+e.title.replace(/</g,'&lt;')+'<span class="cal-badge">'+lbl+'</span></div>'+
+          (e.location?'<div class="cal-location">'+e.location.replace(/</g,'&lt;').slice(0,70)+'</div>':'')+
+        '</div></div>';});});showOnlyCal('cal-lista');document.getElementById('cal-lista').innerHTML=html;}
+      window.carregarCalendario=function(){showOnlyCal('cal-loading');fetch('/api/calendar').then(function(r){return r.json();}).then(function(data){if(data.error){if(data.error.includes('invalid_client')||data.error.includes('refresh_token')||!process){showOnlyCal('cal-no-creds');}else{document.getElementById('cal-error-msg').textContent=data.error;showOnlyCal('cal-error');}return;}_calEvents=data.events||[];calRender(_calEvents);}).catch(function(err){document.getElementById('cal-error-msg').textContent=err.message;showOnlyCal('cal-error');});};
+      document.querySelectorAll('.cal-filter').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.cal-filter').forEach(function(b){b.classList.remove('active');});this.classList.add('active');_calFilter=this.getAttribute('data-filter');if(_calEvents.length)calRender(_calEvents);});});
+      document.querySelectorAll('.nav-item').forEach(function(item){item.addEventListener('click',function(){if(this.getAttribute('data-view')==='calendario')setTimeout(carregarCalendario,50);});});
     })();
     </script>
 </div><!-- /main -->
