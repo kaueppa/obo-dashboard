@@ -1009,7 +1009,7 @@ tbody tr:last-child td{border-bottom:none}
                 '<div style="font-size:12px;color:#888;margin-top:2px;">'+( p.funcao||'—' )+'</div>' +
               '</div>' +
               '<div style="display:flex;gap:6px;">' +
-                '<button onclick="editarParceiro(''+p.id+'')" style="padding:5px 8px;border:1px solid #eee;border-radius:6px;background:#fff;cursor:pointer;font-size:11px;color:#555;">Editar</button>' +
+                '<button onclick="editarParceiro('\''+p.id+'\'')" style="padding:5px 8px;border:1px solid #eee;border-radius:6px;background:#fff;cursor:pointer;font-size:11px;color:#555;">Editar</button>' +
                 '<button onclick="removerParceiro(''+p.id+'')" style="padding:5px 8px;border:1px solid #fee2e2;border-radius:6px;background:#fff;cursor:pointer;font-size:11px;color:#ef4444;">Remover</button>' +
               '</div>' +
             '</div>' +
@@ -1158,7 +1158,7 @@ tbody tr:last-child td{border-bottom:none}
       function calFmtTime(ev){if(ev.allDay)return'Dia todo';var d=new Date(ev.start.dateTime||ev.start.date);return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
       function calFmtDay(ds){var d=new Date(ds+'T12:00:00');var t=new Date().toISOString().slice(0,10);var tm=new Date(Date.now()+86400000).toISOString().slice(0,10);if(ds===t)return'Hoje · '+d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});if(ds===tm)return'Amanhã · '+d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});return d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});}
       function calFilter(evs){var t=new Date().toISOString().slice(0,10);if(_calFilter==='today')return evs.filter(function(e){return(e.start.date||e.start.dateTime||'').slice(0,10)===t;});if(_calFilter==='week'){var w=new Date(Date.now()+7*86400000).toISOString().slice(0,10);return evs.filter(function(e){var d=(e.start.date||e.start.dateTime||'').slice(0,10);return d>=t&&d<=w;});}return evs;}
-      function calRender(evs){var filtered=calFilter(evs);if(!filtered.length){showOnlyCal('cal-vazio');return;}var groups={};filtered.forEach(function(e){var d=(e.start.date||e.start.dateTime||'').slice(0,10);if(!groups[d])groups[d]=[];groups[d].push(e);});var today=new Date().toISOString().slice(0,10);var html='';Object.keys(groups).sort().forEach(function(day){var isT=day===today;html+='<div class="cal-day-header'+(isT?' today-hd':'')+'">'+calFmtDay(day)+'</div>';groups[day].forEach(function(e){var lbl=e.calendar!=='primary'?'oi@':'contato@';html+='<div class="cal-event'+(isT?' ev-today':'')+'" onclick="window.open(''+(e.link||'')+"','_blank')">"+
+      function calRender(evs){var filtered=calFilter(evs);if(!filtered.length){showOnlyCal('cal-vazio');return;}var groups={};filtered.forEach(function(e){var d=(e.start.date||e.start.dateTime||'').slice(0,10);if(!groups[d])groups[d]=[];groups[d].push(e);});var today=new Date().toISOString().slice(0,10);var html='';Object.keys(groups).sort().forEach(function(day){var isT=day===today;html+='<div class="cal-day-header'+(isT?' today-hd':'')+'">'+calFmtDay(day)+'</div>';groups[day].forEach(function(e){var lbl=e.calendar!=='primary'?'oi@':'contato@';html+='<div class="cal-event'+(isT?' ev-today':'')+'" onclick="window.open(\''+(e.link||'')+'\'\',\'_blank\')">'+ 
         '<div class="cal-time">'+calFmtTime(e)+'</div>'+
         '<div style="flex:1;min-width:0;">'+
           '<div class="cal-title">'+e.title.replace(/</g,'&lt;')+'<span class="cal-badge">'+lbl+'</span></div>'+
