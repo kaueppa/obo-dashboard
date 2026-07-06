@@ -1209,6 +1209,85 @@ tbody tr:last-child td{border-bottom:none}
       });
     }
   });
+
+// ── TRELLO live sync ────────────────────────────────────────
+(function(){
+  function fmt(n){return(n||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  function buildCol(title,badge,cards){
+    var tagMap={r:'at',y:'ag',b:'',g:'ok'};
+    var tag=tagMap[badge]||'';
+    var rows=cards.slice(0,8).map(function(c){
+      return '<div class="kb-card"><div class="kb-card-ttl">'+c.name+'</div>'+
+        (c.members&&c.members.length?'<div class="kb-card-sub">'+c.members.join(', ')+'</div>':'')+
+        (c.daysLate&&c.daysLate>0?'<span class="kb-tag '+tag+'">'+c.daysLate+'d atraso</span>':'')+
+        '</div>';
+    }).join('');
+    var more=cards.length>8?'<div class="kb-more">+ '+(cards.length-8)+' mais</div>':'';
+    return '<div class="kb-col"><div class="kb-hd"><span class="kb-title">'+title+'</span><span class="kb-badge '+badge+'">'+cards.length+'</span></div>'+rows+more+'</div>';
+  }
+  window.carregarTrello=function(){
+    var kb=document.querySelector('#view-projetos .kanban');
+    if(!kb)return;
+    kb.innerHTML='<div style="text-align:center;padding:40px;color:#888;font-size:13px;">Carregando projetos do Trello...</div>';
+    fetch('/api/trello').then(function(r){return r.json();}).then(function(data){
+      if(!data.ok){
+        kb.innerHTML='<div style="padding:20px;color:#EF4444;font-size:13px;">'+data.error+'</div>';
+        return;
+      }
+      var standby=(data.standby||[]);
+      kb.innerHTML=buildCol('Em Atraso','r',data.emAtraso||[])+
+        buildCol('Em Ajuste','y',data.emAjuste||[])+
+        buildCol('Em Aprovação','b',data.emAprovacao||[])+
+        buildCol('Stand-by','g',standby);
+      // update summary badges on dashboard
+      var el;
+      if(data.resumo){
+        if(el=document.getElementById('alert-atraso-num'))el.textContent=data.resumo.emAtraso||0;
+        if(el=document.getElementById('ps-atraso-num'))el.textContent=data.resumo.totalVencidos||0;
+      }
+    }).catch(function(err){
+      kb.innerHTML='<div style="padding:20px;color:#EF4444;font-size:13px;">Erro ao carregar Trello: '+err.message+'</div>';
+    });
+  };
+  document.querySelectorAll('.nav-item').forEach(function(item){
+    item.addEventListener('click',function(){
+      if(this.getAttribute('data-view')==='projetos')setTimeout(carregarTrello,50);
+    });
+  });
+})();
+
+// ── FINANCEIRO live sync ─────────────────────────────────────
+(function(){
+  function fmtBRL(v){return'R$ '+(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  window.carregarFinanceiro=function(){
+    // Conta Azul
+    fetch('/api/contaazul').then(function(r){return r.json();}).then(function(data){
+      if(!data.ok)return;
+      var el;
+      if(el=document.getElementById('fin-kpi-entradas'))el.textContent=fmtBRL(data.receita&&data.receita.recebido);
+      if(el=document.getElementById('fin-kpi-saidas'))el.textContent=fmtBRL(data.despesa&&data.despesa.pago);
+      var res=(data.receita&&data.receita.recebido||0)-(data.despesa&&data.despesa.pago||0);
+      if(el=document.getElementById('fin-kpi-resultado')){
+        el.textContent=(res>=0?'+':'')+fmtBRL(res);
+        el.style.color=res>=0?'#22C55E':'#EF4444';
+      }
+    }).catch(function(){});
+    // Banco Inter
+    fetch('/api/inter').then(function(r){return r.json();}).then(function(data){
+      var el=document.getElementById('fin-kpi-inter-saldo');
+      if(!el)return;
+      if(!data.configured){el.textContent='Não configurado';el.style.color='#999';return;}
+      if(!data.ok){el.textContent='Erro API Inter';el.style.color='#EF4444';return;}
+      el.textContent=fmtBRL(data.saldo);
+      el.style.color=(data.saldo||0)>=0?'#22C55E':'#EF4444';
+    }).catch(function(){});
+  };
+  document.querySelectorAll('.nav-item').forEach(function(item){
+    item.addEventListener('click',function(){
+      if(this.getAttribute('data-view')==='financeiro')setTimeout(carregarFinanceiro,50);
+    });
+  });
+})();
 </script>
 <script src="/loader.js"></script>
 </body>
