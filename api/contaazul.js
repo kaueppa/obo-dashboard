@@ -19,8 +19,7 @@
 //   4. Salve o refresh_token retornado como CONTAAZUL_REFRESH_TOKEN
 // ============================================================
 
-co
-.st CLIENT_ID     = process.env.CONTAAZUL_CLIENT_ID;
+const CLIENT_ID     = process.env.CONTAAZUL_CLIENT_ID;
 const CLIENT_SECRET = process.env.CONTAAZUL_CLIENT_SECRET;
 const REFRESH_TOKEN = process.env.CONTAAZUL_REFRESH_TOKEN;
 
@@ -52,7 +51,7 @@ async function getAccessToken() {
 }
 
 // Helper GET com Bearer token
-apsync function apiGet(path, token, params = {}) {
+async function apiGet(path, token, params = {}) {
   const url = new URL(`${API_BASE}${path}`);
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
 
@@ -88,7 +87,7 @@ module.exports = async function handler(req, res) {
   try {
     const token = await getAccessToken();
 
-    // Intervalo: mЪHw corrente
+    // Intervalo: mês corrente
     const now      = new Date();
     const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0, 10);
     const lastDay  = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().slice(0, 10);
