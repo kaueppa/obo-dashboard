@@ -5,10 +5,20 @@ export default function handler(req, res) {
 
   const { user, pass } = req.body;
 
-  const validUser = process.env.DASHBOARD_USER || 'kaue';
-  const validPass = process.env.DASHBOARD_PASSWORD;
+  const users = [
+    {
+      user: process.env.DASHBOARD_USER || 'kaue',
+      pass: process.env.DASHBOARD_PASSWORD
+    },
+    {
+      user: process.env.DASHBOARD_USER_2 || '',
+      pass: process.env.DASHBOARD_PASSWORD_2 || ''
+    }
+  ];
 
-  if (user === validUser && pass === validPass) {
+  const match = users.find(u => u.user && u.pass && user === u.user && pass === u.pass);
+
+  if (match) {
     const token = Buffer.from(`${user}:${pass}`).toString('base64');
     res.setHeader(
       'Set-Cookie',
