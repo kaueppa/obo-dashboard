@@ -497,10 +497,10 @@ tbody tr:last-child td{border-bottom:none}
     ══════════════════════════════════ -->
     <div class="view" id="view-financeiro">
       <div class="crm-kpi-row">
-        <div class="crm-kpi"><div class="crm-kpi-label">Receita do mês</div><div id="fin-kpi-entradas" class="crm-kpi-val" style="color:#22C55E">R$ 45.419</div><div class="crm-kpi-sub">Prev. julho · R$3.998 recebidos</div></div>
-        <div class="crm-kpi"><div class="crm-kpi-label">Saídas do mês</div><div id="fin-kpi-saidas" class="crm-kpi-val" style="color:#EF4444">R$ 47.104</div><div class="crm-kpi-sub">Pago R$30.750 · Vencido R$1.000</div></div>
-        <div class="crm-kpi"><div class="crm-kpi-label">Resultado líquido</div><div id="fin-kpi-resultado" class="crm-kpi-val" style="color:#EF4444">-R$ 1.685</div><div class="crm-kpi-sub">Previsão julho · a receber</div></div>
-        <div class="crm-kpi"><div class="crm-kpi-label">Saldo Banco Inter PJ</div><div id="fin-kpi-inter-saldo" class="crm-kpi-val" style="color:#F59E0B">R$ 8.365</div><div class="crm-kpi-sub">Inter 03/07 · CA PJ R$9.626</div></div>
+        <div class="crm-kpi"><div class="crm-kpi-label">Receita do mês</div><div id="fin-kpi-entradas" class="crm-kpi-val" style="color:#22C55E">R$ 63.602</div><div class="crm-kpi-sub">Prev. julho · R$3.998 recebidos</div></div>
+        <div class="crm-kpi"><div class="crm-kpi-label">Saídas do mês</div><div id="fin-kpi-saidas" class="crm-kpi-val" style="color:#EF4444">R$ 49.079</div><div class="crm-kpi-sub">Pago R$30.750 · Vencido R$1.000</div></div>
+        <div class="crm-kpi"><div class="crm-kpi-label">Resultado líquido</div><div id="fin-kpi-resultado" class="crm-kpi-val" style="color:#22C55E">+R$ 14.523</div><div class="crm-kpi-sub">Previsão julho · a receber</div></div>
+        <div class="crm-kpi"><div class="crm-kpi-label">Saldo Banco Inter PJ</div><div id="fin-kpi-inter-saldo" class="crm-kpi-val" style="color:#F59E0B">R$ 12.010/div><div class="crm-kpi-sub">Inter 03/07 · CA PJ R$9.626</div></div>
       </div>
       <div class="panel" style="margin-bottom:14px">
         <div class="panel-hd"><span class="panel-title">Metas financeiras — Jul/26</span></div>
@@ -1276,7 +1276,7 @@ tbody tr:last-child td{border-bottom:none}
     fetch('/api/inter').then(function(r){return r.json();}).then(function(data){
       var el=document.getElementById('fin-kpi-inter-saldo');
       if(!el)return;
-      if(!data.configured){el.textContent='R$ 8.365';el.style.color='#999';return;}
+      if(!data.configured){el.textContent='R$ 12.010';el.style.color='#999';return;}
       if(!data.ok){el.textContent='Erro API Inter';el.style.color='#EF4444';return;}
       el.textContent=fmtBRL(data.saldo);
       el.style.color=(data.saldo||0)>=0?'#22C55E':'#EF4444';
